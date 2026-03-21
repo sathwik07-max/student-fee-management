@@ -4,18 +4,14 @@ services:
     name: adarsha-backend
     env: docker
     dockerContext: backend
-    dockerCommand: python app.py
     plan: free
     envVars:
       - key: DATABASE_URL
-        value: sqlite:////opt/render/project/src/backend/instance/school.db
+        value: sqlite:////app/instance/school.db
       - key: JWT_SECRET_KEY
         generateValue: true
-      - key: FRONTEND_URL
-        fromService:
-          name: adarsha-frontend
-          type: web
-          property: host
+      - key: PORT
+        value: "5000"
 
   # --- THE FRONTEND (The Face) ---
   - type: web
@@ -29,3 +25,5 @@ services:
           name: adarsha-backend
           type: web
           property: host
+      - key: PORT
+        value: "3000"
