@@ -30,13 +30,8 @@ load_dotenv()
 
 app = Flask(__name__, instance_relative_config=True)
 
-# Production CORS: Allow your specific domain or * in a controlled way
-FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
-CORS(app, resources={r"/*": {
-    "origins": [FRONTEND_URL, "http://localhost:3000"],
-    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    "allow_headers": ["Content-Type", "Authorization"]
-}}, supports_credentials=True)
+# Production CORS: Allowing all during deployment to fix connection issues
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 # Configuration
 basedir = os.path.abspath(os.path.dirname(__file__))
