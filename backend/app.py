@@ -555,14 +555,12 @@ def get_students():
     user = User.query.get(user_id)
     active_year = get_active_year()
     
-    # SLIMMING FIX: Only fetch students for the ACTIVE year to keep data small
     query = Student.query.join(StudentSession).filter(StudentSession.academic_year_id == active_year.id)
 
     if user.role == 'teacher':
         assigned_class_ids = [c.id for c in user.assigned_classes]
         query = query.filter(StudentSession.classroom_id.in_(assigned_class_ids))
 
-    # Optimization: Use selectinload for relationships
     query = query.options(
         selectinload(Student.sessions).selectinload(StudentSession.classroom),
         selectinload(Student.sessions).selectinload(StudentSession.fees).selectinload(StudentFee.fee_type),
@@ -570,7 +568,18 @@ def get_students():
     )
 
     students = query.all()
-    return jsonify(students_schema.dump(students))
+    data = students_schema.dump(students)
+    
+    # SHIELD 2: Clean student data for JSON safety
+    for s in data:
+        for session in s.get('sessions', []):
+            session['old_due'] = float(session.get('old_due') or 0)
+            session['total_fee_payable'] = float(session.get('total_fee_payable') or 0)
+            session['total_paid'] = float(session.get('total_paid') or 0)
+            session['final_due'] = float(session.get('final_due') or 0)
+            session['discount'] = float(session.get('discount') or 0)
+
+    return jsonify(data)
 
 @app.route('/students', methods=['POST'])
 @jwt_required()
