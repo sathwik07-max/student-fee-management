@@ -1,4 +1,6 @@
-const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API = window.location.hostname === "localhost" 
+  ? "http://localhost:5000" 
+  : "https://adarsha-backend-n0dn.onrender.com";
 
 // Helper for authenticated requests
 async function authFetch(url, options = {}) {
