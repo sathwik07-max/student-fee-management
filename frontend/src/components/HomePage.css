@@ -158,9 +158,46 @@ body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
 .footer-bottom-bar { border-top: 1px solid rgba(255,255,255,0.1); padding: 40px 0; text-align: center; opacity: 0.5; font-weight: 600; }
 
+/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-  .hero-brand-title { font-size: 3.5rem; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+  /* Navbar */
+  .nav-wrap { padding: 0 15px; }
+  .brand-name-main { font-size: 1.2rem; }
+  .brand-name-sub { font-size: 0.6rem; letter-spacing: 2px; }
+  .nav-logo { height: 40px; }
   .nav-menu { display: none; }
+  .brand-divider { height: 30px; margin: 0 10px; }
+
+  /* Hero Section */
+  .hero-section { height: 80vh; }
+  .hero-brand-title { font-size: 3rem; margin-bottom: 15px; }
+  .hero-motto { font-size: 1.2rem; margin-bottom: 30px; }
+  .hero-btns { display: flex; flex-direction: column; gap: 15px; padding: 0 20px; }
+  .btn-brand-cta, .btn-brand-outline { margin: 0; padding: 15px 20px; font-size: 1rem; width: 100%; text-align: center; }
+  .est-pill { font-size: 0.7rem; padding: 4px 15px; margin-bottom: 15px; }
+
+  /* Stats Section */
+  .stats-dashboard { margin: -40px 15px 0; padding: 30px 15px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .stat-number { font-size: 2.2rem; }
+  .stat-label { font-size: 0.7rem; }
+
+  /* Facilities Section */
+  .fac-section { padding: 60px 20px; }
+  .branded-maintitle { font-size: 2.2rem; }
+  .fac-grid { grid-template-columns: 1fr; gap: 25px; }
+  .fac-card-content { padding: 25px; }
+  .fac-img-header { height: 200px; }
+
+  /* WhatsApp Float */
+  .wa-float-branded { bottom: 20px; right: 20px; padding: 10px 15px; border-radius: 50px; }
+  .wa-text { display: none; } /* Hide text on small screens, show only icon */
+  .wa-float-branded img { width: 30px; height: 30px; margin: 0; }
+
+  /* Footer */
+  .footer-branded { padding: 60px 20px 0; }
+  .footer-grid { gap: 40px; }
+  .footer-logo-wrap h2 { font-size: 2.5rem; }
+  .footer-desc { font-size: 1rem; }
 }
+
