@@ -3,8 +3,8 @@ services:
   - type: web
     name: adarsha-backend
     env: docker
-    dockerContext: backend  # Tells Render: "Go into the 'backend' folder first"
-    dockerfilePath: Dockerfile # Tells Render: "The file is right here named 'Dockerfile'"
+    dockerContext: .  # Stand in the root folder
+    dockerfilePath: backend/Dockerfile # Look for the file inside 'backend'
     plan: free
     envVars:
       - key: DATABASE_URL
@@ -18,8 +18,8 @@ services:
   - type: web
     name: adarsha-frontend
     env: docker
-    dockerContext: frontend # Tells Render: "Go into the 'frontend' folder first"
-    dockerfilePath: Dockerfile # Tells Render: "The file is right here named 'Dockerfile'"
+    dockerContext: . # Stand in the root folder
+    dockerfilePath: frontend/Dockerfile # Look for the file inside 'frontend'
     plan: free
     envVars:
       - key: REACT_APP_API_URL
