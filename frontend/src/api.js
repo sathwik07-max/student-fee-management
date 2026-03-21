@@ -1,6 +1,5 @@
-const API = window.location.hostname === "localhost" 
-  ? "http://localhost:5000" 
-  : "https://adarsha-backend-n0dn.onrender.com";
+const API = "https://adarsha-backend-n0dn.onrender.com";
+console.log("System pointing to Brain at:", API);
 
 // Helper for authenticated requests
 async function authFetch(url, options = {}) {
@@ -39,7 +38,7 @@ export async function login(username, password) {
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", data.username);
     localStorage.setItem("role", data.role);
-    localStorage.setItem("can_collect_fees", data.can_collect_fees ? "true" : "false"); // Save permission
+    localStorage.setItem("can_collect_fees", data.can_collect_fees ? "true" : "false");
   }
   return data;
 }
