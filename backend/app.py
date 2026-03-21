@@ -1437,24 +1437,33 @@ def seed_initial_data():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
-        # Initialize default academic year if none exists
-        if not AcademicYear.query.first():
-            db.session.add(AcademicYear(name="2024-25", is_active=True))
-            db.session.commit()
-        
-        # Create admin user if it doesn't exist
-        admin = User.query.filter_by(username='admin').first()
-        if not admin:
-            initial_password = os.getenv('INITIAL_ADMIN_PASSWORD', 'AdarshaChangeMe2026!')
-            print(f"Creating default admin user with initial password...")
-            admin = User(username='admin')
-            admin.set_password(initial_password)
-            db.session.add(admin)
-            db.session.commit()
-        
-        # Run test seed
-        seed_initial_data()
+        try:
+            print("Connecting to database and creating tables...")
+            db.create_all()
+            
+            # 1. Safe Academic Year Init
+            if not AcademicYear.query.first():
+                print("Seeding initial Academic Year...")
+                db.session.add(AcademicYear(name="2024-25", is_active=True))
+                db.session.commit()
+            
+            # 2. Safe Admin User Init
+            admin = User.query.filter_by(username='admin').first()
+            if not admin:
+                initial_password = os.getenv('INITIAL_ADMIN_PASSWORD', 'AdarshaChangeMe2026!')
+                print("Creating default admin user...")
+                admin = User(username='admin')
+                admin.set_password(initial_password)
+                db.session.add(admin)
+                db.session.commit()
+            
+            # 3. Safe Test Data Seed
+            seed_initial_data()
+            print("Database initialization complete.")
+            
+        except Exception as e:
+            print(f"DATABASE ERROR ON STARTUP: {str(e)}")
+            db.session.rollback()
         
     port = int(os.getenv('PORT', 5000))
     app.run(host=os.getenv('HOST', "0.0.0.0"), port=port, debug=True)
