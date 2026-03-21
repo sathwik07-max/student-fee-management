@@ -36,6 +36,11 @@ CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 # Configuration
 basedir = os.path.abspath(os.path.dirname(__file__))
 db_path = os.getenv('DATABASE_URL', f'sqlite:///{os.path.join(basedir, "instance", "school.db")}')
+
+# Fix Render's 'postgres://' prefix to 'postgresql://' for SQLAlchemy
+if db_path.startswith("postgres://"):
+    db_path = db_path.replace("postgres://", "postgresql://", 1)
+
 if db_path.startswith("sqlite:///"):
     os.makedirs(os.path.join(basedir, "instance"), exist_ok=True)
     os.makedirs(os.path.join(basedir, "instance", "backups"), exist_ok=True)
