@@ -1224,12 +1224,32 @@ def get_stats():
     stats = query.first()
     class_stats = class_query.group_by(ClassRoom.name).all()
 
+    # DEFENSIVE DATA CHECK: Convert None/NaN to 0 for JSON safety
+    total_students = stats[0] or 0
+    total_fees = float(stats[1] or 0)
+    total_paid = float(stats[2] or 0)
+    total_due = float(stats[3] or 0)
+
+    formatted_class_stats = []
+    for c in class_stats:
+        c_name = str(c[0] or "N/A")
+        c_count = int(c[1] or 0)
+        c_total = float(c[2] or 0)
+        c_paid = float(c[3] or 0)
+        formatted_class_stats.append({
+            "name": c_name, 
+            "count": c_count, 
+            "total": c_total, 
+            "paid": c_paid, 
+            "due": c_total - c_paid
+        })
+
     return jsonify({
-        "total_students": stats[0] or 0,
-        "total_fees": stats[1] or 0,
-        "total_paid": stats[2] or 0,
-        "total_due": stats[3] or 0,
-        "class_stats": [{"name": c[0], "count": c[1], "total": c[2], "paid": c[3], "due": (c[2] or 0) - (c[3] or 0)} for c in class_stats]
+        "total_students": total_students,
+        "total_fees": total_fees,
+        "total_paid": total_paid,
+        "total_due": total_due,
+        "class_stats": formatted_class_stats
     })
 
 @app.route('/backup/database', methods=['GET'])

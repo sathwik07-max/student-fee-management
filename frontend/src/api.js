@@ -1,4 +1,7 @@
-const API = "https://adarsha-backend-n0dn.onrender.com";
+// Detect if we're on Vercel or local
+const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const API = isLocal ? "http://localhost:5000" : "/api";
+
 console.log("System pointing to Brain at:", API);
 
 // Helper for authenticated requests
