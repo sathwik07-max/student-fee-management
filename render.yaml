@@ -3,8 +3,8 @@ services:
   - type: web
     name: adarsha-backend
     env: docker
-    dockerContext: .  # Stand in the front yard
-    dockerfilePath: backend/Dockerfile # Recipe is in the kitchen
+    dockerContext: .
+    dockerfilePath: backend/Dockerfile
     plan: free
     envVars:
       - key: DATABASE_URL
@@ -13,19 +13,18 @@ services:
         generateValue: true
       - key: PORT
         value: "5000"
+      - key: FRONTEND_URL
+        value: https://adarsha-frontend.onrender.com # The Public URL
 
   # --- THE FRONTEND (The Face) ---
   - type: web
     name: adarsha-frontend
     env: docker
-    dockerContext: . # Stand in the front yard
-    dockerfilePath: frontend/Dockerfile # Recipe is in the living room
+    dockerContext: .
+    dockerfilePath: frontend/Dockerfile
     plan: free
     envVars:
       - key: REACT_APP_API_URL
-        fromService:
-          name: adarsha-backend
-          type: web
-          property: host
+        value: https://adarsha-backend.onrender.com # The Public URL
       - key: PORT
         value: "3000"
