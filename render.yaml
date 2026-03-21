@@ -14,7 +14,7 @@ services:
       - key: PORT
         value: "5000"
       - key: FRONTEND_URL
-        value: https://adarsha-frontend.onrender.com # The Public URL
+        value: https://adarsha-frontend-n0dn.onrender.com # Updated with real suffix
 
   # --- THE FRONTEND (The Face) ---
   - type: web
@@ -25,6 +25,6 @@ services:
     plan: free
     envVars:
       - key: REACT_APP_API_URL
-        value: https://adarsha-backend.onrender.com # The Public URL
+        value: https://adarsha-backend-n0dn.onrender.com # Updated with real suffix
       - key: PORT
         value: "3000"
