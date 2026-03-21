@@ -1,6 +1,6 @@
-// Detect if we're on Vercel or local
+// Detect if we're on Render or local
 const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-const API = isLocal ? "http://localhost:5000" : "/api";
+const API = isLocal ? "http://localhost:5000" : process.env.REACT_APP_API_URL;
 
 console.log("System pointing to Brain at:", API);
 
