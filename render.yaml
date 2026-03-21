@@ -4,7 +4,7 @@ services:
     name: adarsha-backend
     env: docker
     dockerContext: backend
-    dockerfilePath: backend/Dockerfile
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
       - key: DATABASE_URL
@@ -19,7 +19,7 @@ services:
     name: adarsha-frontend
     env: docker
     dockerContext: frontend
-    dockerfilePath: frontend/Dockerfile
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
       - key: REACT_APP_API_URL
