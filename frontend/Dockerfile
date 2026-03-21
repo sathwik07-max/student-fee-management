@@ -1,20 +1,15 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20-slim
-
-# Set the working directory in the container
+# Stage 1: Build the React app
+FROM node:20-slim as build-stage
 WORKDIR /app
-
-# Copy the package files from the frontend folder
 COPY frontend/package*.json ./
-
-# Install the dependencies
 RUN npm install
-
-# Copy the rest of the frontend code into the container
 COPY frontend/ .
+RUN npm run build
 
-# Make port 3000 available
+# Stage 2: Serve the app with a lightweight server
+FROM node:20-slim
+WORKDIR /app
+RUN npm install -g serve
+COPY --from=build-stage /app/build ./build
 EXPOSE 3000
-
-# Start the application in development mode for now
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "3000"]
