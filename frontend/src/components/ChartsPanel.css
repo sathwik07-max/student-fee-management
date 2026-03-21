@@ -1,0 +1,28 @@
+/* src/components/ChartsPanel.css */
+.charts-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin: 36px 30px 0 30px;
+  justify-content: space-between;
+}
+.chart-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 rgba(35, 86, 198, 0.07);
+  padding: 1.1rem 1.5rem 0.7rem 1.5rem;
+  flex: 1 1 350px;
+  min-width: 320px;
+  max-width: 480px;
+}
+.chart-card h4 {
+  color: #2356c6;
+  margin-bottom: 1rem;
+  font-size: 1.12rem;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .charts-panel { flex-direction: column; margin: 18px 5px 0 5px; }
+  .chart-card { margin-bottom: 18px; }
+}

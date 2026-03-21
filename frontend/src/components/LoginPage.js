@@ -1,0 +1,174 @@
+// src/components/LoginPage.js
+import React, { useState } from "react";
+import { 
+  Box, 
+  Paper, 
+  Typography, 
+  TextField, 
+  Button, 
+  InputAdornment, 
+  IconButton, 
+  Alert, 
+  CircularProgress,
+  useTheme,
+  alpha,
+  Container,
+  Fade
+} from "@mui/material";
+import { FiUser, FiLock, FiEye, FiEyeOff, FiShield } from "react-icons/fi";
+import { login as apiLogin } from "../api";
+import "./LoginPage.css";
+
+export default function LoginPage({ onLogin, showNotification }) {
+  const theme = useTheme();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const data = await apiLogin(username, password);
+      if (data.success && data.token) {
+        // Successful login - data is already saved to localStorage in api.js
+        if (showNotification) showNotification("🎉 Welcome back! Login successful!", "success");
+        setLoading(false);
+        onLogin(); 
+      } else {
+        setLoading(false);
+        setError(data.error || "Invalid credentials. Please try again.");
+      }
+    } catch (err) {
+      setLoading(false);
+      setError("Server connection failed. Please contact IT support.");
+    }
+  };
+
+  return (
+    <Box className="login-wrapper">
+      <Container maxWidth="sm">
+        <Fade in={true} timeout={800}>
+          <Paper 
+            elevation={24} 
+            sx={{ 
+              p: { xs: 4, sm: 6 }, 
+              borderRadius: 5,
+              background: alpha(theme.palette.background.paper, 0.95),
+              backdropFilter: "blur(10px)",
+              textAlign: "center",
+              border: "1px solid",
+              borderColor: alpha(theme.palette.primary.main, 0.1)
+            }}
+          >
+            <Box sx={{ mb: 4 }}>
+              <Box sx={{ 
+                width: 70, height: 70, 
+                bgcolor: alpha(theme.palette.primary.main, 0.1), 
+                borderRadius: "50%", 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center",
+                mx: "auto",
+                mb: 2
+              }}>
+                <FiShield size={35} color={theme.palette.primary.main} />
+              </Box>
+              <Typography variant="h4" fontWeight={900} color="primary.main" gutterBottom>
+                Admin Portal
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                Welcome back! Please login to your account.
+              </Typography>
+            </Box>
+
+            <form onSubmit={handleSubmit}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <TextField
+                  fullWidth
+                  label="Username"
+                  variant="outlined"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoFocus
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <FiUser color={theme.palette.text.secondary} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 3 } }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  variant="outlined"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <FiLock color={theme.palette.text.secondary} />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword(!showPassword)}
+                          edge="end"
+                          size="small"
+                        >
+                          {showPassword ? <FiEyeOff /> : <FiEye />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 3 } }}
+                />
+
+                {error && (
+                  <Alert severity="error" variant="filled" sx={{ borderRadius: 2 }}>
+                    {error}
+                  </Alert>
+                )}
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  disabled={loading}
+                  sx={{ 
+                    py: 1.8, 
+                    borderRadius: 3, 
+                    fontWeight: 800, 
+                    fontSize: "1.1rem",
+                    boxShadow: theme.shadows[8],
+                    "&:hover": { transform: "translateY(-2px)", boxShadow: theme.shadows[12] },
+                    transition: "all 0.2s"
+                  }}
+                >
+                  {loading ? <CircularProgress size={24} color="inherit" /> : "Login to Dashboard"}
+                </Button>
+              </Box>
+            </form>
+
+            <Box sx={{ mt: 4 }}>
+              <Typography variant="body2" color="text.secondary">
+                Don't have an account? <span style={{ color: theme.palette.primary.main, fontWeight: 700, cursor: 'pointer' }} onClick={() => alert("Contact System Admin for access.")}>Request Access</span>
+              </Typography>
+            </Box>
+          </Paper>
+        </Fade>
+      </Container>
+    </Box>
+  );
+}

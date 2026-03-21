@@ -1,0 +1,73 @@
+.dash-filters {
+  margin: 20px 30px 0 30px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 rgba(35, 86, 198, 0.07);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 22px;
+  padding: 1.2rem 1rem;
+  align-items: flex-end;
+}
+
+.dash-filters label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1em;
+  font-weight: 600;
+  color: #2356c6;
+  margin-bottom: 0;
+  gap: 6px;
+}
+
+.dash-filters select,
+.dash-filters .filter-input {
+  border: 1px solid #b6c5e6;
+  border-radius: 6px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  background: #f8faff;
+  outline: none;
+  min-width: 120px;
+  margin-top: 4px;
+}
+
+.dash-filters .filter-input[type="number"] {
+  max-width: 100px;
+}
+
+.dash-filters > .filter-input {
+  min-width: 180px;
+}
+
+.filter-reset-btn {
+  background: #fd464a;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-weight: 500;
+  padding: 0.57rem 1.1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 8px;
+  transition: background 0.19s;
+}
+.filter-reset-btn:hover {
+  background: #c82333;
+}
+
+/* Responsive for mobile/tablet */
+@media (max-width: 900px) {
+  .dash-filters {
+    flex-direction: column;
+    gap: 16px 0;
+    padding: 1rem 0.5rem;
+  }
+  .dash-filters label,
+  .dash-filters > .filter-input,
+  .filter-reset-btn {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
+  }
+}

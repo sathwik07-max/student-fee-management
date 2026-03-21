@@ -1,0 +1,252 @@
+/* src/components/AddStudentModal.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap');
+
+.cute-admission-container {
+  background: #f4f7fe;
+  min-height: 100vh;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* STRICT A4 DIMENSIONS */
+.admission-page-a4 {
+  background: #ffffff;
+  width: 210mm;
+  height: 297mm; 
+  padding: 8mm 12mm; /* Slightly tighter for extra row room */
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+/* CLEARER WATERMARK */
+.watermark-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.12; /* Increased for better visibility */
+  width: 550px;
+  pointer-events: none;
+  z-index: 0;
+}
+.watermark-bg img { width: 100%; /* Removed grayscale to keep logo colors faint */ }
+
+.a4-content-wrapper {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.admission-header-premium {
+  text-align: center;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #1e3a8a;
+}
+
+.header-school-logo {
+  width: 65px;
+  height: 65px;
+  margin-bottom: 4px;
+}
+
+.school-title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  color: #1e3a8a;
+}
+
+.school-location {
+  margin: 2px 0 5px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.admission-badge {
+  display: inline-block;
+  background: #1e3a8a;
+  color: white;
+  padding: 3px 18px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Sections */
+.section-divider {
+  margin: 10px 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-divider span {
+  font-weight: 800;
+  color: #1e3a8a;
+  font-size: 11px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.section-divider::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background: #cbd5e1;
+}
+
+.form-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  background: rgba(255,255,255,0.7);
+}
+
+.highlight-card {
+  border-left: 4px solid #1e3a8a;
+  background: #f8faff;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.grid-row.compact { margin-bottom: 4px; }
+.grid-row:last-child { margin-bottom: 0; }
+
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+
+.input-box label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 2px;
+}
+
+.input-box input,
+.input-box select {
+  border: none;
+  border-bottom: 1px solid #94a3b8;
+  background: transparent;
+  padding: 2px 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #000;
+  outline: none;
+  width: 100%;
+}
+
+.name-input {
+  font-size: 15px !important;
+  color: #1e3a8a !important;
+  text-transform: uppercase;
+  font-weight: 700 !important;
+}
+
+.mole-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mole-row { display: flex; align-items: center; gap: 6px; }
+.dot { width: 4px; height: 4px; background: #1e3a8a; border-radius: 50%; }
+
+/* Signatures */
+.signature-grid {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+.sig-column { text-align: center; }
+.sig-space {
+  height: 30px;
+  border-bottom: 1px solid #000;
+  margin-bottom: 4px;
+}
+.sig-column p {
+  font-weight: 700;
+  font-size: 11px;
+  margin: 0;
+}
+
+/* Footer */
+.footer-decoration {
+  margin-top: auto;
+  padding-top: 5px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 9px;
+}
+
+/* Web UI */
+.web-actions {
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px dashed #cbd5e1;
+}
+.action-buttons-flex { display: flex; justify-content: flex-end; gap: 8px; }
+.action-buttons-flex button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary { background: #1e3a8a; color: white; }
+.btn-accent { background: #fbbf24; color: #000; }
+.btn-secondary { background: #e2e8f0; color: #475569; }
+
+/* PRINT SETTINGS */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  
+  body, .cute-admission-container {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .admission-page-a4 {
+    box-shadow: none !important;
+    border: none !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 8mm 12mm !important;
+    margin: 0 !important;
+  }
+  
+  .no-print { display: none !important; }
+  
+  .form-card {
+    background: transparent !important;
+    border: 1px solid #ddd !important;
+  }
+  
+  .input-box input, .input-box select {
+    border-bottom: 1px solid #000 !important;
+  }
+  
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

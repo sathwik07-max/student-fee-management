@@ -1,0 +1,166 @@
+
+.finance-report-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.finance-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  border: 1px solid #eef2f6;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.summary-icon {
+  width: 45px;
+  height: 45px;
+  background: #f8fafc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.summary-card.total .summary-icon { background: #eff6ff; color: #3b82f6; }
+.summary-card.collected .summary-icon { background: #ecfdf5; color: #10b981; }
+.summary-card.outstanding .summary-icon { background: #fef2f2; color: #ef4444; }
+
+.summary-label {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.summary-value {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.report-actions-card, .class-breakdown-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #eef2f6;
+}
+
+.report-actions-card h3, .class-breakdown-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.report-actions-card p {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.range-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.input-group input {
+  padding: 0.6rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  color: #1e293b;
+}
+
+.download-btn {
+  background: #1e293b;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.download-btn:hover {
+  background: #0f172a;
+}
+
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.breakdown-table th {
+  text-align: left;
+  padding: 1rem;
+  background: #f8fafc;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.breakdown-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.progress-cell {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.percentage {
+  font-weight: 600;
+  min-width: 45px;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #10b981;
+  border-radius: 10px;
+}

@@ -1,0 +1,110 @@
+
+.activity-feed-container {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eef2f6;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.header-icon {
+  color: #3b82f6;
+  font-size: 1.2rem;
+}
+
+.feed-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.feed-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.feed-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px dashed #f1f5f9;
+}
+
+.feed-item:last-child {
+  border-bottom: none;
+}
+
+.feed-item-icon {
+  width: 32px;
+  height: 32px;
+  background: #f8fafc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.feed-item-content {
+  flex: 1;
+}
+
+.feed-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.feed-action {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.feed-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.feed-details {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0.2rem 0;
+}
+
+.feed-user {
+  font-size: 0.75rem;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.empty-feed {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem 0;
+  font-size: 0.9rem;
+}
+
+.feed-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}

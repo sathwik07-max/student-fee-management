@@ -1,0 +1,174 @@
+/* --- ADARSHA ERP PREMIUM SUITE --- */
+
+:root {
+  --erp-navy: #0f172a;
+  --erp-gold: #d4af37;
+  --erp-white: #ffffff;
+  --erp-bg: #f8fafc;
+  --erp-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Sidebar Fix: Force Flex Visibility */
+.nav-links-container {
+  display: flex !important;
+  flex-direction: column;
+}
+
+/* --- BRANDED CARDS & CONTAINERS --- */
+.promo-container-branded, .teacher-mgmt-container {
+  padding: 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.promo-card-premium, .teacher-card {
+  background: var(--erp-white);
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  box-shadow: var(--erp-shadow);
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-card-premium::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 6px;
+  background: linear-gradient(to right, var(--erp-navy), var(--erp-gold));
+}
+
+/* --- PROMOTION FLOW UI --- */
+.promo-header-lockup {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 20px;
+}
+
+.icon-badge {
+  font-size: 2.5rem;
+  background: #f0f9ff;
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 20px;
+}
+
+.promo-header-lockup h3 {
+  font-family: 'Marcellus', serif;
+  font-size: 1.8rem;
+  color: var(--erp-navy);
+  margin: 0;
+}
+
+.promo-flow-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  padding: 40px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+
+.flow-step { flex: 1; }
+.flow-step label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  color: var(--erp-gold);
+  margin-bottom: 12px;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--erp-navy);
+  background: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.select-wrapper select:focus {
+  border-color: var(--erp-navy);
+  outline: none;
+}
+
+.flow-arrow {
+  font-size: 2rem;
+  color: #cbd5e1;
+  padding: 0 20px;
+}
+
+.btn-promo-execute {
+  width: 100%;
+  background: var(--erp-navy);
+  color: white;
+  border: none;
+  padding: 20px;
+  border-radius: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
+}
+
+.btn-promo-execute:hover {
+  background: var(--erp-gold);
+  transform: translateY(-3px);
+}
+
+/* --- STAFF MANAGEMENT UI --- */
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.teacher-card {
+  padding: 25px;
+  transition: 0.3s;
+}
+
+.teacher-card:hover { transform: translateY(-5px); }
+
+.teacher-card.inactive { opacity: 0.6; filter: grayscale(1); }
+
+.card-header {
+  display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+}
+
+.avatar {
+  width: 50px; height: 50px;
+  background: var(--erp-navy);
+  color: var(--erp-gold);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; font-weight: 800; font-size: 1.2rem;
+}
+
+.class-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.pill {
+  background: #f1f5f9; color: var(--erp-navy);
+  padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+}
+
+.btn-toggle {
+  padding: 8px 15px; border-radius: 6px; font-weight: 700; border: none; cursor: pointer;
+}
+.btn-toggle.stop { background: #fee2e2; color: #dc2626; }
+.btn-toggle.grant { background: #dcfce7; color: #16a34a; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

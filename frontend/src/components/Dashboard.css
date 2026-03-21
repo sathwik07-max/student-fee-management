@@ -1,0 +1,152 @@
+
+.dashboard-layout {
+  display: flex;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.dashboard-main {
+  flex: 1;
+  margin-left: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-content {
+  padding: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.tab-header {
+  margin-bottom: 2rem;
+}
+
+.tab-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.4rem 0;
+}
+
+.tab-header p {
+  color: #64748b;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.dashboard-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.analytics-grid {
+  margin-top: 2rem;
+}
+
+.dash-table-section {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eef2f6;
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.dash-pagination {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #f8fafc;
+  border-top: 1px solid #eef2f6;
+}
+
+.dash-pagination button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.dash-pagination button.active {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+}
+
+.maintenance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.backup-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #eef2f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.backup-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.backup-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.custom-btn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.custom-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.activity-logs-content, .admissions-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #eef2f6;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}

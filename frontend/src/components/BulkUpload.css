@@ -1,0 +1,142 @@
+
+.bulk-upload-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+  max-width: 800px;
+}
+
+.template-link {
+    margin-top: 0.5rem;
+    color: #64748b;
+    font-style: italic;
+}
+
+.upload-controls {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.file-input-wrapper input {
+    display: none;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #f1f5f9;
+    color: #1e293b;
+    border: 1.5px dashed #cbd5e1;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.file-label:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+}
+
+.upload-btn-trigger {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-btn-trigger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.password-upload-group {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    width: 100%;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.password-input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.lock-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+    font-family: inherit;
+}
+
+.password-input-wrapper input:focus {
+    border-color: #3b82f6;
+}
+
+.upload-btn-confirm {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.upload-btn-cancel {
+    background: #f1f5f9;
+    color: #64748b;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.upload-message {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 600;
+}
+
+.upload-message.success {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.upload-message.error {
+    background: #fef2f2;
+    color: #dc2626;
+}

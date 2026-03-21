@@ -1,0 +1,42 @@
+.notification-toast {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2557d8;
+  color: #fff;
+  font-size: 1.11rem;
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 32px #2557d875;
+  z-index: 3000;
+  animation: notification-fadein 0.35s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@keyframes notification-fadein {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 80px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.notification-close {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  margin-left: 12px;
+  line-height: 1;
+  opacity: 0.8;
+}
+.notification-close:hover {
+  opacity: 1;
+}

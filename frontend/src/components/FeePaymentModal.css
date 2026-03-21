@@ -1,0 +1,31 @@
+/* src/components/FeePaymentModal.css */
+.fee-modal-overlay {
+  position: fixed; top:0; left:0; width:100vw; height:100vh;
+  background: rgba(36,50,99,0.14); display:flex; align-items:center; justify-content:center; z-index:3000;
+}
+.fee-modal-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px #446ed640;
+  max-width: 370px; width:95vw;
+  padding: 2.2rem 1.5rem 1.2rem 1.5rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.fee-modal-row {
+  margin-bottom: 1.2rem;
+  display: flex; flex-direction: column;
+}
+.fee-modal-row label {
+  font-weight: 600; color: #144c7a;
+}
+.fee-modal-row input, .fee-modal-row select {
+  margin-top: 7px; padding: 8px 11px;
+  border-radius: 7px; border: 1.5px solid #a2cfff;
+  font-size: 1rem; background: #f6f9fe;
+}
+.fee-modal-actions {
+  margin-top: 1.1rem; display: flex; gap: 10px; justify-content: flex-end;
+}
+.modal-cancel { background: #eee; color: #234; border: none; border-radius: 7px; padding: 8px 18px; }
+.modal-save { background: #135dc4; color: #fff; border: none; border-radius: 7px; padding: 8px 18px; font-weight: 600;}
+.fee-modal-error { color: #d02525; margin-bottom: 12px; }

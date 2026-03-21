@@ -1,0 +1,40 @@
+.login-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top right, #f2f7ff 0%, #dbeafe 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add a subtle animated decoration in the background */
+.login-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(135deg, rgba(35, 86, 198, 0.05) 0%, rgba(35, 86, 198, 0) 100%);
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+  z-index: 0;
+}
+
+.login-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, rgba(35, 86, 198, 0.03) 0%, rgba(35, 86, 198, 0) 100%);
+  border-radius: 50%;
+  bottom: -50px;
+  left: -50px;
+  z-index: 0;
+}
+
+.login-wrapper > .MuiContainer-root {
+  position: relative;
+  z-index: 1;
+}
