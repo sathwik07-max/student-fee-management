@@ -3,8 +3,8 @@ services:
   - type: web
     name: adarsha-backend
     env: docker
-    dockerContext: backend
-    dockerfilePath: Dockerfile  # Tells Render: "Look inside 'backend' for the Dockerfile"
+    dockerContext: .
+    dockerfilePath: backend/Dockerfile
     plan: free
     envVars:
       - key: DATABASE_URL
@@ -18,8 +18,8 @@ services:
   - type: web
     name: adarsha-frontend
     env: docker
-    dockerContext: frontend
-    dockerfilePath: Dockerfile  # Tells Render: "Look inside 'frontend' for the Dockerfile"
+    dockerContext: .
+    dockerfilePath: frontend/Dockerfile
     plan: free
     envVars:
       - key: REACT_APP_API_URL
