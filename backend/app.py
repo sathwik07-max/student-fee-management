@@ -1465,5 +1465,13 @@ if __name__ == '__main__':
             print(f"DATABASE ERROR ON STARTUP: {str(e)}")
             db.session.rollback()
         
+    # Determine if we are in production
+    is_production = os.getenv('RENDER', 'False') == 'true'
     port = int(os.getenv('PORT', 5000))
-    app.run(host=os.getenv('HOST', "0.0.0.0"), port=port, debug=True)
+    
+    if is_production:
+        print("Running in PRODUCTION mode...")
+        app.run(host="0.0.0.0", port=port, debug=False)
+    else:
+        print("Running in DEVELOPMENT mode...")
+        app.run(host="0.0.0.0", port=port, debug=True)
