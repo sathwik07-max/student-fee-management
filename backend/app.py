@@ -160,6 +160,24 @@ def parse_date(date_str):
         except: continue
     return None
 
+@app.route('/danger-zone/reset', methods=['GET'])
+def reset_database_data():
+    try:
+        print("NUCLEAR RESET STARTED...")
+        # Delete in order to avoid Foreign Key errors
+        db.session.query(Payment).delete()
+        db.session.query(StudentFee).delete()
+        db.session.query(StudentAttendance).delete()
+        db.session.query(StudentSession).delete()
+        db.session.query(Admission).delete()
+        db.session.query(Student).delete()
+        db.session.query(AuditLog).delete()
+        db.session.commit()
+        return "<h1>DATABASE CLEANED SUCCESSFULLY!</h1><p>You can now do ONE clean upload.</p>"
+    except Exception as e:
+        db.session.rollback()
+        return f"<h1>RESET FAILED</h1><p>{str(e)}</p>"
+
 # --- AUTH & SYSTEM ROUTES ---
 
 @app.route("/login", methods=["POST"])
