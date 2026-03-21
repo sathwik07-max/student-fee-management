@@ -535,24 +535,21 @@ from sqlalchemy.orm import joinedload, selectinload
 def get_students():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
+    active_year = get_active_year()
     
-    # Performance Optimization: selectinload is better for large datasets than joinedload
-    query = Student.query.options(
-        selectinload(Student.sessions).selectinload(StudentSession.academic_year),
-        selectinload(Student.sessions).selectinload(StudentSession.classroom),
-        selectinload(Student.sessions).selectinload(StudentSession.fees).selectinload(StudentFee.fee_type),
-        selectinload(Student.sessions).selectinload(StudentSession.payments),
-        selectinload(Student.admission)
-    )
+    # SLIMMING FIX: Only fetch students for the ACTIVE year to keep data small
+    query = Student.query.join(StudentSession).filter(StudentSession.academic_year_id == active_year.id)
 
-    # Filter for teachers: Only show students in their assigned classes
     if user.role == 'teacher':
         assigned_class_ids = [c.id for c in user.assigned_classes]
-        active_year = get_active_year()
-        query = query.join(StudentSession).filter(
-            StudentSession.classroom_id.in_(assigned_class_ids),
-            StudentSession.academic_year_id == active_year.id
-        )
+        query = query.filter(StudentSession.classroom_id.in_(assigned_class_ids))
+
+    # Optimization: Use selectinload for relationships
+    query = query.options(
+        selectinload(Student.sessions).selectinload(StudentSession.classroom),
+        selectinload(Student.sessions).selectinload(StudentSession.fees).selectinload(StudentFee.fee_type),
+        selectinload(Student.sessions).selectinload(StudentSession.payments)
+    )
 
     students = query.all()
     return jsonify(students_schema.dump(students))
