@@ -1,7 +1,4 @@
-// Detect if we're on Render or local
-const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-const API = isLocal ? "http://localhost:5000" : process.env.REACT_APP_API_URL;
-
+const API = "https://adarsha-backend-n0dn.onrender.com";
 console.log("System pointing to Brain at:", API);
 
 // Helper for authenticated requests
