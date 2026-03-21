@@ -12,3 +12,4 @@ bcrypt==3.2.2
 sqlalchemy
 marshmallow-sqlalchemy
 flask-marshmallow
+psycopg2-binary  # The PostgreSQL Translator
