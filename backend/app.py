@@ -1200,6 +1200,25 @@ def download_admissions_excel():
 
 # --- STATS & EXPORTS ---
 
+import math
+
+# Custom JSON encoder to handle NaN/Infinity
+class SafeJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, float):
+            if math.isnan(obj) or math.isinf(obj):
+                return 0.0
+        return super().default(obj)
+
+app.json_encoder = SafeJSONEncoder
+
+def safe_float(val):
+    try:
+        f = float(val or 0)
+        return 0.0 if math.isnan(f) or math.isinf(f) else f
+    except:
+        return 0.0
+
 @app.route('/stats', methods=['GET'])
 @jwt_required()
 def get_stats():
@@ -1235,22 +1254,22 @@ def get_stats():
 
     # DEFENSIVE DATA CHECK: Convert None/NaN to 0 for JSON safety
     total_students = stats[0] or 0
-    total_fees = float(stats[1] or 0)
-    total_paid = float(stats[2] or 0)
-    total_due = float(stats[3] or 0)
+    total_fees = safe_float(stats[1])
+    total_paid = safe_float(stats[2])
+    total_due = safe_float(stats[3])
 
     formatted_class_stats = []
     for c in class_stats:
         c_name = str(c[0] or "N/A")
         c_count = int(c[1] or 0)
-        c_total = float(c[2] or 0)
-        c_paid = float(c[3] or 0)
+        c_total = safe_float(c[2])
+        c_paid = safe_float(c[3])
         formatted_class_stats.append({
             "name": c_name, 
             "count": c_count, 
             "total": c_total, 
             "paid": c_paid, 
-            "due": c_total - c_paid
+            "due": safe_float(c_total - c_paid)
         })
 
     return jsonify({
