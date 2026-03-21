@@ -1443,6 +1443,16 @@ if __name__ == '__main__':
             db.session.add(AcademicYear(name="2024-25", is_active=True))
             db.session.commit()
         
+        # Create admin user if it doesn't exist
+        admin = User.query.filter_by(username='admin').first()
+        if not admin:
+            initial_password = os.getenv('INITIAL_ADMIN_PASSWORD', 'AdarshaChangeMe2026!')
+            print(f"Creating default admin user with initial password...")
+            admin = User(username='admin')
+            admin.set_password(initial_password)
+            db.session.add(admin)
+            db.session.commit()
+        
         # Run test seed
         seed_initial_data()
         
