@@ -3,8 +3,8 @@ services:
   - type: web
     name: adarsha-backend
     env: docker
-    dockerContext: .  # Stand in the root folder
-    dockerfilePath: backend/Dockerfile # Look for the file inside 'backend'
+    dockerContext: .  # Stand in the front yard
+    dockerfilePath: backend/Dockerfile # Recipe is in the kitchen
     plan: free
     envVars:
       - key: DATABASE_URL
@@ -18,8 +18,8 @@ services:
   - type: web
     name: adarsha-frontend
     env: docker
-    dockerContext: . # Stand in the root folder
-    dockerfilePath: frontend/Dockerfile # Look for the file inside 'frontend'
+    dockerContext: . # Stand in the front yard
+    dockerfilePath: frontend/Dockerfile # Recipe is in the living room
     plan: free
     envVars:
       - key: REACT_APP_API_URL

@@ -4,19 +4,16 @@ FROM node:20-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json into the container
-COPY package*.json ./
+# Copy the package files from the frontend folder
+COPY frontend/package*.json ./
 
 # Install the dependencies
 RUN npm install
 
 # Copy the rest of the frontend code into the container
-COPY . .
+COPY frontend/ .
 
-# Build the React application
-# RUN npm run build
-
-# Make port 3000 available to the world outside this container
+# Make port 3000 available
 EXPOSE 3000
 
 # Start the application in development mode for now

@@ -4,22 +4,22 @@ FROM python:3.12-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container at /app
-COPY requirements.txt .
+# Copy the requirements from the backend folder
+COPY backend/requirements.txt .
 
-# Install any needed packages specified in requirements.txt
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the backend code into the container at /app
-COPY . .
+# Copy the rest of the backend code into the container
+COPY backend/ .
 
 # Create instance directory for SQLite
 RUN mkdir -p instance
 
-# Make port 5000 available to the world outside this container
+# Make port 5000 available
 EXPOSE 5000
 
-# Define environment variable
+# Define environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
