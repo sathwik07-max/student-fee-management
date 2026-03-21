@@ -528,19 +528,21 @@ def export_payments():
 
 # --- STUDENT MANAGEMENT ---
 
+from sqlalchemy.orm import joinedload, selectinload
+
 @app.route('/students', methods=['GET'])
 @jwt_required()
 def get_students():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
     
-    # Performance Optimization: Use joinedload
+    # Performance Optimization: selectinload is better for large datasets than joinedload
     query = Student.query.options(
-        joinedload(Student.sessions).joinedload(StudentSession.academic_year),
-        joinedload(Student.sessions).joinedload(StudentSession.classroom),
-        joinedload(Student.sessions).joinedload(StudentSession.fees).joinedload(StudentFee.fee_type),
-        joinedload(Student.sessions).joinedload(StudentSession.payments),
-        joinedload(Student.admission)
+        selectinload(Student.sessions).selectinload(StudentSession.academic_year),
+        selectinload(Student.sessions).selectinload(StudentSession.classroom),
+        selectinload(Student.sessions).selectinload(StudentSession.fees).selectinload(StudentFee.fee_type),
+        selectinload(Student.sessions).selectinload(StudentSession.payments),
+        selectinload(Student.admission)
     )
 
     # Filter for teachers: Only show students in their assigned classes
