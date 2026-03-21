@@ -3,7 +3,7 @@ services:
   - type: web
     name: adarsha-backend
     env: docker
-    dockerContext: .
+    dockerContext: backend
     dockerfilePath: backend/Dockerfile
     plan: free
     envVars:
@@ -18,7 +18,7 @@ services:
   - type: web
     name: adarsha-frontend
     env: docker
-    dockerContext: .
+    dockerContext: frontend
     dockerfilePath: frontend/Dockerfile
     plan: free
     envVars:
