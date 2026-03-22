@@ -700,36 +700,47 @@ def upload_students():
         imported_count = 0
         for _, row in df.iterrows():
             id_no = str(row.get('ID.NO', '')).strip()
-            if not id_no or id_no == 'nan': continue
-            
-            # 1. Get or Create Student
+            if not id_no or id_no.lower() == 'nan': continue
+
+            # 1. Clean Data Function
+            def clean_str(val):
+                if pd.isna(val) or str(val).lower() == 'nan': return ""
+                return str(val).strip()
+
+            # 2. Get or Create Student
             student = Student.query.filter_by(id_no=id_no).first()
             if not student:
                 student = Student(id_no=id_no)
                 db.session.add(student)
-            
-            student.name = str(row.get('NAME', student.name or ''))
-            student.father_name = str(row.get('F.NAME', student.father_name or ''))
-            student.phone_no = str(row.get('PH.NO', student.phone_no or ''))
-            student.village = str(row.get('VILLAGE', student.village or ''))
-            student.bus_route = str(row.get('Bus Route', student.bus_route or ''))
-            student.hostel_day = str(row.get('Hostel/Day', student.hostel_day or ''))
+
+            student.name = clean_str(row.get('NAME')) or student.name
+            student.father_name = clean_str(row.get('F.NAME')) or student.father_name
+
+            # Phone number often imports as float/scientific notation
+            ph = row.get('PH.NO')
+            if not pd.isna(ph):
+                student.phone_no = str(int(float(ph))) if str(ph).replace('.','').isdigit() else str(ph)
+
+            student.village = clean_str(row.get('VILLAGE')) or student.village
+            student.bus_route = clean_str(row.get('Bus Route')) or student.bus_route
+            student.hostel_day = clean_str(row.get('Hostel/Day')) or student.hostel_day
             db.session.flush()
 
-            # 2. Handle Session & Classroom
-            class_name = str(row.get('CLASS', 'N/A'))
-            classroom = get_or_create_classroom(class_name)
-            
+            # 3. Handle Session & Classroom
+            class_val = row.get('CLASS', 'N/A')
+            class_name = str(int(float(class_val))) if isinstance(class_val, (float, int)) and not pd.isna(class_val) else clean_str(class_val)
+            classroom = get_or_create_classroom(class_name or "N/A")
+
             session = StudentSession.query.filter_by(student_id=student.id, academic_year_id=active_year.id).first()
             if not session:
                 session = StudentSession(student_id=student.id, academic_year_id=active_year.id, classroom_id=classroom.id)
                 db.session.add(session)
-            
+
             session.classroom_id = classroom.id
-            session.old_due = safe_float(row.get('Old Due', session.old_due or 0) or 0)
+            session.old_due = safe_float(row.get('Old Due', 0))
             db.session.flush()
 
-            # 3. Handle Fees
+            # 4. Handle Fees
             fee_mapping = {
                 "School Fee": "Tuition Fee",
                 "Comp Fee": "Computer Fee",
@@ -737,24 +748,21 @@ def upload_students():
                 "Bus Fee": "Transport Fee"
             }
             for col_name, type_name in fee_mapping.items():
-                if col_name in row:
-                    amount = safe_float(row.get(col_name, 0) or 0)
-                    if amount > 0:
-                        fee_type = get_or_create_fee_type(type_name)
-                        fee_item = StudentFee.query.filter_by(session_id=session.id, fee_type_id=fee_type.id).first()
-                        if fee_item: fee_item.amount = amount
-                        else: db.session.add(StudentFee(session_id=session.id, fee_type_id=fee_type.id, amount=amount))
+                amount = safe_float(row.get(col_name, 0))
+                if amount > 0:
+                    fee_type = get_or_create_fee_type(type_name)
+                    fee_item = StudentFee.query.filter_by(session_id=session.id, fee_type_id=fee_type.id).first()
+                    if fee_item: fee_item.amount = amount
+                    else: db.session.add(StudentFee(session_id=session.id, fee_type_id=fee_type.id, amount=amount))
 
-            # 4. Handle Initial Payment (if any)
-            paid = safe_float(row.get('Total Paid', 0) or 0)
+            # 5. Handle Initial Payment
+            paid = safe_float(row.get('Total Paid', 0))
             if paid > 0:
-                # Check if this exact payment already exists to avoid duplicates during re-upload
-                existing_pay = Payment.query.filter_by(session_id=session.id, amount=paid).first()
+                existing_pay = Payment.query.filter_by(session_id=session.id, amount=paid, remarks="Imported from Excel").first()
                 if not existing_pay:
                     db.session.add(Payment(session_id=session.id, amount=paid, remarks="Imported from Excel"))
 
             imported_count += 1
-
         db.session.commit()
         log_action("Bulk Upload Students", imported_count, "system")
         return jsonify({"success": True, "message": f"Successfully imported {imported_count} students."})
