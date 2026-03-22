@@ -24,11 +24,36 @@ from schemas import (
 from helpers import admin_required, check_admin_password
 from dotenv import load_dotenv
 import json
+import math
+from flask.json.provider import DefaultJSONProvider
 
 # Load environment variables
 load_dotenv()
 
+class SafeJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, float):
+            if math.isnan(obj) or math.isinf(obj):
+                return 0.0
+        return super().default(obj)
+
+def safe_float(val):
+    try:
+        # Handle cases where val might be "NaN" string or actual float nan
+        if val is None: return 0.0
+        f = float(val)
+        return 0.0 if math.isnan(f) or math.isinf(f) else f
+    except:
+        return 0.0
+
 app = Flask(__name__, instance_relative_config=True)
+
+class CustomJSONProvider(DefaultJSONProvider):
+    def dumps(self, obj, **kwargs):
+        # Use our SafeJSONEncoder to handle NaN/Inf globally
+        return json.dumps(obj, cls=SafeJSONEncoder, **kwargs)
+
+app.json = CustomJSONProvider(app)
 
 # Production CORS: Allowing all during deployment to fix connection issues
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
@@ -274,7 +299,7 @@ def add_payment():
 
     data = request.json # { student_id_no, amount, method, remarks }
     student_id_no = data.get('student_id_no')
-    amount = float(data.get('amount', 0))
+    amount = safe_float(data.get('amount', 0))
     
     if not student_id_no or amount <= 0:
         return jsonify({"success": False, "error": "Invalid payment data"}), 400
@@ -573,11 +598,11 @@ def get_students():
     # SHIELD 2: Clean student data for JSON safety
     for s in data:
         for session in s.get('sessions', []):
-            session['old_due'] = float(session.get('old_due') or 0)
-            session['total_fee_payable'] = float(session.get('total_fee_payable') or 0)
-            session['total_paid'] = float(session.get('total_paid') or 0)
-            session['final_due'] = float(session.get('final_due') or 0)
-            session['discount'] = float(session.get('discount') or 0)
+            session['old_due'] = safe_float(session.get('old_due'))
+            session['total_fee_payable'] = safe_float(session.get('total_fee_payable'))
+            session['total_paid'] = safe_float(session.get('total_paid'))
+            session['final_due'] = safe_float(session.get('final_due'))
+            session['discount'] = safe_float(session.get('discount'))
 
     return jsonify(data)
 
@@ -612,7 +637,7 @@ def add_student():
             student_id=student.id,
             academic_year_id=active_year.id,
             classroom_id=classroom.id,
-            old_due=float(data.get("old_due", 0) or 0)
+            old_due=safe_float(data.get("old_due", 0) or 0)
         )
         db.session.add(session)
         db.session.flush()
@@ -625,13 +650,13 @@ def add_student():
             "bus fee": "Transport Fee"
         }
         for key, type_name in fee_mapping.items():
-            amount = float(data.get(key, 0) or 0)
+            amount = safe_float(data.get(key, 0) or 0)
             if amount > 0:
                 fee_type = get_or_create_fee_type(type_name)
                 db.session.add(StudentFee(session_id=session.id, fee_type_id=fee_type.id, amount=amount))
 
         # Initial Payment
-        initial_pay = float(data.get("total_pay", 0) or 0)
+        initial_pay = safe_float(data.get("total_pay", 0) or 0)
         if initial_pay > 0:
             db.session.add(Payment(session_id=session.id, amount=initial_pay))
 
@@ -697,7 +722,7 @@ def upload_students():
                 db.session.add(session)
             
             session.classroom_id = classroom.id
-            session.old_due = float(row.get('Old Due', session.old_due or 0) or 0)
+            session.old_due = safe_float(row.get('Old Due', session.old_due or 0) or 0)
             db.session.flush()
 
             # 3. Handle Fees
@@ -709,7 +734,7 @@ def upload_students():
             }
             for col_name, type_name in fee_mapping.items():
                 if col_name in row:
-                    amount = float(row.get(col_name, 0) or 0)
+                    amount = safe_float(row.get(col_name, 0) or 0)
                     if amount > 0:
                         fee_type = get_or_create_fee_type(type_name)
                         fee_item = StudentFee.query.filter_by(session_id=session.id, fee_type_id=fee_type.id).first()
@@ -717,7 +742,7 @@ def upload_students():
                         else: db.session.add(StudentFee(session_id=session.id, fee_type_id=fee_type.id, amount=amount))
 
             # 4. Handle Initial Payment (if any)
-            paid = float(row.get('Total Paid', 0) or 0)
+            paid = safe_float(row.get('Total Paid', 0) or 0)
             if paid > 0:
                 # Check if this exact payment already exists to avoid duplicates during re-upload
                 existing_pay = Payment.query.filter_by(session_id=session.id, amount=paid).first()
@@ -770,7 +795,7 @@ def handle_student(idno):
             if session:
                 if "CLASS" in data:
                     session.classroom = get_or_create_classroom(data["CLASS"])
-                session.old_due = float(data.get("old_due", session.old_due))
+                session.old_due = safe_float(data.get("old_due", session.old_due))
                 
                 # Update fees
                 fee_mapping = {"sc.fee": "Tuition Fee", "comp": "Computer Fee", "ex.fee": "Examination Fee", "bus fee": "Transport Fee"}
@@ -778,12 +803,12 @@ def handle_student(idno):
                     if key in data:
                         fee_type = get_or_create_fee_type(type_name)
                         fee_item = StudentFee.query.filter_by(session_id=session.id, fee_type_id=fee_type.id).first()
-                        if fee_item: fee_item.amount = float(data[key] or 0)
-                        else: db.session.add(StudentFee(session_id=session.id, fee_type_id=fee_type.id, amount=float(data[key] or 0)))
+                        if fee_item: fee_item.amount = safe_float(data[key] or 0)
+                        else: db.session.add(StudentFee(session_id=session.id, fee_type_id=fee_type.id, amount=safe_float(data[key] or 0)))
 
                 # Handle Payment
-                if 'new_payment' in data and float(data['new_payment']) > 0:
-                    db.session.add(Payment(session_id=session.id, amount=float(data['new_payment'])))
+                if 'new_payment' in data and safe_float(data['new_payment']) > 0:
+                    db.session.add(Payment(session_id=session.id, amount=safe_float(data['new_payment'])))
                     log_action("Payment Received", student.id_no, "student", {"amount": data['new_payment']})
 
             db.session.commit()
@@ -901,7 +926,7 @@ def manage_classrooms():
         room = ClassRoom(name=name, section=section)
         db.session.add(room)
     
-    room.default_tuition_fee = float(data.get("fee", 0))
+    room.default_tuition_fee = safe_float(data.get("fee", 0))
     db.session.commit()
     return jsonify({"success": True})
 
@@ -926,8 +951,8 @@ def manage_bus_routes():
         route = BusRoute(location_name=data.get("location"))
         db.session.add(route)
     
-    route.monthly_fee = float(data.get("monthly", 0))
-    route.yearly_fee = float(data.get("yearly", 0))
+    route.monthly_fee = safe_float(data.get("monthly", 0))
+    route.yearly_fee = safe_float(data.get("yearly", 0))
     db.session.commit()
     return jsonify({"success": True})
 
@@ -985,13 +1010,13 @@ def add_admission():
 
                 # --- SMART FEE AUTO-POPULATION (WITH OVERRIDES) ---
                 # 1. Apply Class Tuition Fee
-                tuition_amount = float(data.get("tuitionFee", classroom.default_tuition_fee) or 0)
+                tuition_amount = safe_float(data.get("tuitionFee", classroom.default_tuition_fee) or 0)
                 if tuition_amount > 0:
                     fee_type = get_or_create_fee_type("Tuition Fee")
                     db.session.add(StudentFee(session_id=session.id, fee_type_id=fee_type.id, amount=tuition_amount))
                 
                 # 2. Apply Bus Fee based on route or manual input
-                bus_amount = float(data.get("busFee", 0))
+                bus_amount = safe_float(data.get("busFee", 0))
                 if bus_amount <= 0:
                     bus_loc = data.get("bus_route")
                     if bus_loc:
@@ -1003,7 +1028,7 @@ def add_admission():
                     db.session.add(StudentFee(session_id=session.id, fee_type_id=bus_fee_type.id, amount=bus_amount))
 
                 # 3. Handle Initial Payment from Admission Form
-                initial_pay = float(data.get("totalPay", 0) or 0)
+                initial_pay = safe_float(data.get("totalPay", 0) or 0)
                 if initial_pay > 0:
                     db.session.add(Payment(session_id=session.id, amount=initial_pay, payment_method="CASH"))
 
@@ -1199,25 +1224,6 @@ def download_admissions_excel():
     return send_file(output, as_attachment=True, download_name=filename, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
 # --- STATS & EXPORTS ---
-
-import math
-
-# Custom JSON encoder to handle NaN/Infinity
-class SafeJSONEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, float):
-            if math.isnan(obj) or math.isinf(obj):
-                return 0.0
-        return super().default(obj)
-
-app.json_encoder = SafeJSONEncoder
-
-def safe_float(val):
-    try:
-        f = float(val or 0)
-        return 0.0 if math.isnan(f) or math.isinf(f) else f
-    except:
-        return 0.0
 
 @app.route('/stats', methods=['GET'])
 @jwt_required()
@@ -1492,7 +1498,7 @@ def seed_initial_data():
             room = ClassRoom(name=class_name, section="All")
             db.session.add(room)
         # Update fee even if exists for testing
-        room.default_tuition_fee = float(fee)
+        room.default_tuition_fee = safe_float(fee)
     
     # 2. Seed default Bus Route
     if not BusRoute.query.filter_by(location_name="Mangapeta").first():
@@ -1500,7 +1506,7 @@ def seed_initial_data():
     
     db.session.commit()
 
-if __name__ == '__main__':
+def initialize_db():
     with app.app_context():
         try:
             print("Connecting to database and creating tables...")
@@ -1529,7 +1535,11 @@ if __name__ == '__main__':
         except Exception as e:
             print(f"DATABASE ERROR ON STARTUP: {str(e)}")
             db.session.rollback()
-        
+
+# Run initialization
+initialize_db()
+
+if __name__ == '__main__':
     # Determine if we are in production
     is_production = os.getenv('RENDER', 'False') == 'true'
     port = int(os.getenv('PORT', 5000))

@@ -13,3 +13,4 @@ sqlalchemy
 marshmallow-sqlalchemy
 flask-marshmallow
 psycopg2-binary  # The PostgreSQL Translator
+gunicorn
