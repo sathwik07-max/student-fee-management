@@ -55,6 +55,10 @@ class CustomJSONProvider(DefaultJSONProvider):
 
 app.json = CustomJSONProvider(app)
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy", "database": "connected" if db.engine else "error"}), 200
+
 # Production CORS: Allowing all during deployment to fix connection issues
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 

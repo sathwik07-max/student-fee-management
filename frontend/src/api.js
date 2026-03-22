@@ -1,4 +1,4 @@
-const API = "https://adarsha-backend-n0dn.onrender.com";
+const API = process.env.REACT_APP_API_URL || "https://adarsha-backend-n0dn.onrender.com";
 console.log("System pointing to Brain at:", API);
 
 // Helper for authenticated requests
