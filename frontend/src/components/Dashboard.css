@@ -1,158 +1,120 @@
 
 .dashboard-layout {
   display: flex;
-  background: #f8fafc;
+  background: var(--erp-cream);
   min-height: 100vh;
 }
 
 .dashboard-main {
   flex: 1;
-  margin-left: 240px; /* Default desktop sidebar width */
+  margin-left: 280px; 
   display: flex;
   flex-direction: column;
-  min-width: 0; /* Prevent flex children from overflowing */
+  min-width: 0; 
   transition: margin-left 0.3s ease;
 }
 
 .dashboard-content {
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
 }
 
 .tab-header {
-  margin-bottom: clamp(1rem, 4vw, 2rem);
+  margin-bottom: 2.5rem;
+  background: var(--erp-white);
+  padding: 2rem;
+  border-radius: var(--bubble-radius);
+  border: 4px solid rgba(154, 222, 123, 0.2);
+  box-shadow: var(--erp-shadow);
 }
 
 .tab-header h1 {
-  font-size: clamp(1.4rem, 4vw, 1.8rem);
-  font-weight: 800;
-  color: #1e293b;
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--erp-blue);
   margin: 0 0 0.4rem 0;
-  line-height: 1.2;
 }
 
 .tab-header p {
-  color: #64748b;
+  color: var(--erp-navy);
   margin: 0;
-  font-size: clamp(0.85rem, 2vw, 1rem);
-}
-
-.header-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.header-actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.dashboard-grid-layout {
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  gap: clamp(1rem, 3vw, 2rem);
-  margin-top: clamp(1rem, 3vw, 2rem);
-}
-
-.analytics-grid {
-  margin-top: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  opacity: 0.8;
 }
 
 .dash-table-section {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #eef2f6;
+  background: var(--erp-white);
+  border-radius: var(--bubble-radius);
+  border: 4px solid rgba(110, 181, 255, 0.1);
   overflow: hidden;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: var(--erp-shadow);
 }
 
 .dash-pagination {
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  background: #f8fafc;
-  border-top: 1px solid #eef2f6;
-  flex-wrap: wrap;
+  gap: 0.8rem;
+  background: var(--erp-white);
+  border-top: 4px solid var(--erp-cream);
 }
 
 .dash-pagination button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  border: none;
+  background: var(--erp-cream);
+  color: var(--erp-blue);
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: all 0.2s;
-  min-height: 44px; /* Accessible touch target */
+  font-weight: 800;
+  transition: 0.2s;
 }
 
 .dash-pagination button.active {
-  background: #3b82f6;
-  color: #fff;
-  border-color: #3b82f6;
-}
-
-.maintenance-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 45%, 400px), 1fr));
-  gap: 1.5rem;
+  background: var(--erp-blue);
+  color: white;
+  transform: scale(1.1);
 }
 
 .backup-card {
-  background: #fff;
-  padding: clamp(1rem, 3vw, 1.5rem);
-  border-radius: 12px;
-  border: 1px solid #eef2f6;
+  background: var(--erp-white);
+  padding: 2.5rem;
+  border-radius: var(--bubble-radius);
+  border: 4px solid rgba(255, 217, 61, 0.2);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 1.5rem;
+  box-shadow: var(--erp-shadow);
 }
 
 .backup-info h3 {
+  font-family: 'Bubblegum Sans', cursive;
   margin: 0 0 0.5rem 0;
-  font-size: 1.1rem;
-  color: #1e293b;
-}
-
-.backup-info p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #64748b;
-  line-height: 1.5;
+  font-size: 1.8rem;
+  color: var(--erp-navy);
 }
 
 .custom-btn {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #1e293b;
-  padding: 0.7rem 1.2rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  background: var(--erp-cream);
+  border: 2px solid var(--erp-blue);
+  color: var(--erp-blue);
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s;
-  min-height: 44px; /* Accessible touch target */
+  transition: 0.2s;
 }
 
 .custom-btn:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
-}
-
-.activity-logs-content, .admissions-content {
-  background: #fff;
-  padding: clamp(1rem, 3vw, 2rem);
-  border-radius: 12px;
-  border: 1px solid #eef2f6;
+  background: var(--erp-blue);
+  color: white;
+  transform: translateY(-3px);
 }
 
 @media (max-width: 1200px) {

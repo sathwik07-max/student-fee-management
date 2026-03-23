@@ -20,17 +20,17 @@ const facilities = [
     desc: "Professional-grade courts and indoor facilities to nurture athletic talent and physical growth." 
   },
   { 
-    img: "https://images.unsplash.com/photo-1555854817-5b2260d15050?q=80&w=800&auto=format&fit=crop", 
+    img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800&auto=format&fit=crop", 
     title: "Secure Campus", 
-    desc: "A home-like hostel environment and safe transport fleet monitored by 24/7 security." 
+    desc: "A home-like environment and safe transport fleet monitored by 24/7 security." 
   }
 ];
 
 const countersData = [
-  { label: "Years of Legacy", value: 37 },
-  { label: "Enrolled Students", value: 950 },
-  { label: "Expert Faculty", value: 52 },
-  { label: "Gold Medals", value: 68 }
+  { label: "years of Golden Memories 🏆", value: 37 },
+  { label: "Future Leaders 🚀", value: 950 },
+  { label: "Inspiring Mentors ✨", value: 52 },
+  { label: "Gold Medals 🥇", value: 68 }
 ];
 
 export default function HomePage({ onAdmin }) {

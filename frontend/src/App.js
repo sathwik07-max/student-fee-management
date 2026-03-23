@@ -23,47 +23,67 @@ import LoginPage from "./components/LoginPage";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#4f46e5", // Indigo 600
-      light: "#818cf8",
-      dark: "#3730a3",
+      main: "#6EB5FF", // Sky Blue
+      light: "#A0D1FF",
+      dark: "#4A90E2",
+      contrastText: "#ffffff",
     },
     secondary: {
-      main: "#0ea5e9", // Sky 500
+      main: "#FFD93D", // Sunshine Yellow
+      contrastText: "#2D3E50",
+    },
+    success: {
+      main: "#9ADE7B", // Mint Green
     },
     background: {
-      default: "#f8fafc", // Slate 50
+      default: "#FFFDF0", // Light Cream
       paper: "#ffffff",
     },
     text: {
-      primary: "#1e293b", // Slate 800
-      secondary: "#64748b", // Slate 500
+      primary: "#2D3E50", // Soft Navy
+      secondary: "#5A7184", 
     }
   },
   typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-    h1: { fontWeight: 700 },
-    h2: { fontWeight: 700 },
-    h3: { fontWeight: 700 },
-    h4: { fontWeight: 600 },
-    h5: { fontWeight: 600 },
-    h6: { fontWeight: 600 },
+    fontFamily: '"Plus Jakarta Sans", "Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    h1: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
+    h2: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
+    h3: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
+    h4: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
+    h5: { fontWeight: 700, fontFamily: '"Plus Jakarta Sans", sans-serif' },
+    h6: { fontWeight: 700, fontFamily: '"Plus Jakarta Sans", sans-serif' },
+    button: { fontWeight: 800, textTransform: 'none' }
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: 32,
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          fontWeight: 600,
+          borderRadius: 50,
+          padding: '10px 24px',
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: '0 8px 20px rgba(110, 181, 255, 0.3)',
+            transform: 'translateY(-2px)',
+          },
+          transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
         }
       }
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+          boxShadow: '0 15px 35px rgba(110, 181, 255, 0.12)',
+          border: '4px solid rgba(110, 181, 255, 0.05)',
+        }
+      }
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 32,
         }
       }
     }
