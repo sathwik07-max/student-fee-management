@@ -1,86 +1,82 @@
 
+
 .sidebar-container {
   width: 280px;
   height: 100vh;
-  background: var(--erp-white);
-  color: var(--erp-navy);
+  background: #0F172A; /* Deep Midnight Navy */
+  color: #F8FAFC;
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1rem;
   position: fixed;
   left: 0;
   top: 0;
-  box-shadow: 10px 0 40px rgba(110, 181, 255, 0.1);
+  box-shadow: 1px 0 0 0 rgba(255, 255, 255, 0.1);
   z-index: 1000;
-  border-right: 4px solid rgba(110, 181, 255, 0.1);
 }
 
 .sidebar-brand {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 3rem;
-  padding: 0.5rem;
-  background: var(--erp-cream);
-  border-radius: 20px;
+  margin-bottom: 2.5rem;
+  padding: 0.5rem 1rem;
 }
 
 .sidebar-logo {
-  width: 45px;
-  height: 45px;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
 }
 
 .sidebar-brand-text h2 {
-  font-family: 'Bubblegum Sans', cursive;
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
   margin: 0;
-  color: var(--erp-blue);
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
 }
 
 .sidebar-brand-text p {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   margin: 0;
-  color: var(--erp-navy);
-  font-weight: 800;
-  letter-spacing: 1px;
+  color: #94A3B8;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .sidebar-add-btn {
-  background: var(--erp-yellow);
-  color: var(--erp-navy);
+  background: #10B981; /* Emerald */
+  color: #FFFFFF;
   border: none;
-  border-radius: 50px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  font-size: 1rem;
-  font-weight: 800;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   margin-bottom: 2rem;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 6px 0 #E5C12D;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .sidebar-add-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 0 #E5C12D;
-}
-
-.sidebar-add-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #E5C12D;
+  background: #059669;
+  transform: translateY(-1px);
 }
 
 .nav-label {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--erp-blue);
-  margin-bottom: 1.5rem;
-  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #64748B;
+  margin-bottom: 1rem;
+  font-weight: 800;
   padding-left: 1rem;
 }
 
@@ -93,15 +89,15 @@
 .sidebar-nav li, .nav-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.2rem;
-  border-radius: 50px;
+  gap: 0.8rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 0.6rem;
-  transition: all 0.2s;
-  color: var(--erp-navy);
-  font-weight: 700;
-  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+  transition: all 0.15s ease;
+  color: #94A3B8;
+  font-weight: 600;
+  font-size: 0.9rem;
   border: none;
   background: transparent;
   width: 100%;
@@ -109,37 +105,33 @@
 }
 
 .sidebar-nav li:hover, .nav-item:hover {
-  background: var(--erp-cream);
-  color: var(--erp-blue);
-  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
 }
 
 .sidebar-nav li.active {
-  background: var(--erp-blue);
-  color: white;
-  box-shadow: 0 10px 20px rgba(110, 181, 255, 0.3);
+  background: #1E293B;
+  color: #10B981;
 }
 
 .nav-icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
 }
 
-.active-indicator {
-  display: none; /* Removed for bubble style */
-}
-
 .sidebar-footer {
   margin-top: auto;
-  padding-top: 1.5rem;
-  border-top: 4px solid var(--erp-cream);
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-item.logout {
-  color: #FF6B6B;
+  color: #FDA4AF;
 }
 
 .nav-item.logout:hover {
-  background: #FFE3E3;
+  background: rgba(244, 63, 94, 0.1);
+  color: #FB7185;
 }
+

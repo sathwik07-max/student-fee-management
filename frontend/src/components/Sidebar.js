@@ -61,19 +61,19 @@ export default function Sidebar({
   );
 
   const drawerContent = (
-    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', bgcolor: 'background.paper' }}>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', bgcolor: 'primary.main', color: 'white' }}>
       {/* Brand Header */}
-      <Box sx={{ p: 4, display: 'flex', alignItems: 'center', gap: 2, bgcolor: 'background.default' }}>
+      <Box sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
         <Box 
           component="img" 
           src="/logo.png" 
-          sx={{ width: 45, height: 45, borderRadius: 2, bgcolor: 'white', p: 0.5 }}
+          sx={{ width: 32, height: 32, borderRadius: 1 }}
         />
         <Box>
-          <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1, color: 'primary.main', fontFamily: '"Bubblegum Sans", cursive', fontSize: '1.6rem' }}>
+          <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1, letterSpacing: '-0.02em' }}>
             ADARSHA
           </Typography>
-          <Typography variant="caption" sx={{ color: 'text.primary', fontWeight: 800, letterSpacing: 1 }}>
+          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', fontWeight: 700, letterSpacing: '0.1em' }}>
             ERP SYSTEM
           </Typography>
         </Box>
@@ -81,7 +81,7 @@ export default function Sidebar({
 
       {/* Action Button */}
       {userRole === 'admin' && (
-        <Box sx={{ px: 3, py: 3 }}>
+        <Box sx={{ px: 2, py: 2 }}>
           <Button
             fullWidth
             variant="contained"
@@ -92,11 +92,10 @@ export default function Sidebar({
               if (isMobile) onMobileClose();
             }}
             sx={{ 
-              py: 2, 
-              borderRadius: 50,
-              fontSize: '1rem',
-              boxShadow: '0 6px 0 #E5C12D',
-              '&:hover': { boxShadow: '0 8px 0 #E5C12D', transform: 'translateY(-2px)' }
+              py: 1.25, 
+              borderRadius: 2,
+              fontWeight: 700,
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)'
             }}
           >
             New Admission
@@ -105,45 +104,44 @@ export default function Sidebar({
       )}
 
       {/* Navigation */}
-      <Box sx={{ flexGrow: 1, px: 2 }}>
-        <Typography variant="caption" sx={{ px: 3, mb: 2, display: 'block', color: 'primary.main', fontWeight: 900, textTransform: 'uppercase', letterSpacing: 2 }}>
-          Main Menu
+      <Box sx={{ flexGrow: 1, px: 1.5 }}>
+        <Typography variant="caption" sx={{ px: 2, mb: 1.5, display: 'block', color: 'rgba(255,255,255,0.4)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          Navigation
         </Typography>
         <List sx={{ p: 0 }}>
           {filteredItems.map((item) => {
             const active = activeTab === item.id;
             return (
-              <ListItem key={item.id} disablePadding sx={{ mb: 1 }}>
+              <ListItem key={item.id} disablePadding sx={{ mb: 0.5 }}>
                 <ListItemButton
                   onClick={() => {
                     setActiveTab(item.id);
                     if (isMobile) onMobileClose();
                   }}
                   sx={{
-                    borderRadius: 50,
-                    py: 1.5,
-                    px: 3,
-                    backgroundColor: active ? 'primary.main' : 'transparent',
-                    color: active ? 'common.white' : 'text.primary',
+                    borderRadius: 2,
+                    py: 1,
+                    backgroundColor: active ? 'rgba(255,255,255,0.1)' : 'transparent',
+                    color: active ? 'secondary.main' : 'rgba(255,255,255,0.7)',
                     '&:hover': {
-                      backgroundColor: active ? 'primary.main' : 'background.default',
-                      transform: 'translateX(5px)'
+                      backgroundColor: 'rgba(255,255,255,0.05)',
+                      color: 'white'
                     },
-                    transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                    transition: 'all 0.2s ease'
                   }}
                 >
                   <ListItemIcon sx={{ 
                     color: 'inherit', 
-                    minWidth: 40,
-                    fontSize: '1.4rem'
+                    minWidth: 36,
+                    fontSize: '1.2rem'
                   }}>
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText 
                     primary={item.label} 
                     primaryTypographyProps={{ 
-                      fontWeight: 800,
-                      fontSize: '0.95rem'
+                      fontWeight: active ? 700 : 600,
+                      fontSize: '0.875rem'
                     }} 
                   />
                 </ListItemButton>
@@ -154,20 +152,19 @@ export default function Sidebar({
       </Box>
 
       {/* Footer */}
-      <Box sx={{ p: 3, mt: 'auto' }}>
+      <Box sx={{ p: 2, mt: 'auto' }}>
         <ListItemButton
           onClick={onLogout}
           sx={{
-            borderRadius: 50,
-            py: 1.5,
-            color: 'error.main',
-            '&:hover': { backgroundColor: '#FFE3E3' }
+            borderRadius: 2,
+            color: '#FDA4AF',
+            '&:hover': { backgroundColor: 'rgba(244, 63, 94, 0.1)' }
           }}
         >
-          <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+          <ListItemIcon sx={{ color: 'inherit', minWidth: 36 }}>
             <FiLogOut />
           </ListItemIcon>
-          <ListItemText primary="Sign Out" primaryTypographyProps={{ fontWeight: 800 }} />
+          <ListItemText primary="Sign Out" primaryTypographyProps={{ fontWeight: 700, fontSize: '0.875rem' }} />
         </ListItemButton>
       </Box>
     </Box>

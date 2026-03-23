@@ -23,67 +23,58 @@ import LoginPage from "./components/LoginPage";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#6EB5FF", // Sky Blue
-      light: "#A0D1FF",
-      dark: "#4A90E2",
+      main: "#0F172A", // Deep Midnight Navy
+      light: "#1E293B",
+      dark: "#020617",
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#FFD93D", // Sunshine Yellow
-      contrastText: "#2D3E50",
+      main: "#10B981", // Emerald Green (Success/Growth)
+      contrastText: "#ffffff",
     },
-    success: {
-      main: "#9ADE7B", // Mint Green
+    info: {
+      main: "#3B82F6", // Royal Blue
     },
     background: {
-      default: "#FFFDF0", // Light Cream
+      default: "#F8FAFC", // Ultra-clean Slate
       paper: "#ffffff",
     },
     text: {
-      primary: "#2D3E50", // Soft Navy
-      secondary: "#5A7184", 
+      primary: "#0F172A", 
+      secondary: "#64748B", 
     }
   },
   typography: {
-    fontFamily: '"Plus Jakarta Sans", "Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-    h1: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
-    h2: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
-    h3: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
-    h4: { fontWeight: 800, fontFamily: '"Plus Jakarta Sans", sans-serif' },
-    h5: { fontWeight: 700, fontFamily: '"Plus Jakarta Sans", sans-serif' },
-    h6: { fontWeight: 700, fontFamily: '"Plus Jakarta Sans", sans-serif' },
-    button: { fontWeight: 800, textTransform: 'none' }
+    fontFamily: '"Plus Jakarta Sans", "Inter", sans-serif',
+    h1: { fontWeight: 800, letterSpacing: "-0.02em" },
+    h2: { fontWeight: 800, letterSpacing: "-0.02em" },
+    h3: { fontWeight: 700, letterSpacing: "-0.01em" },
+    h4: { fontWeight: 700, letterSpacing: "-0.01em" },
+    h5: { fontWeight: 600 },
+    h6: { fontWeight: 600 },
+    button: { fontWeight: 600, textTransform: 'none', letterSpacing: "0.01em" }
   },
   shape: {
-    borderRadius: 32,
+    borderRadius: 12, // Professional, crisp corners
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 50,
-          padding: '10px 24px',
+          borderRadius: 8,
+          padding: '10px 20px',
           boxShadow: 'none',
           '&:hover': {
-            boxShadow: '0 8px 20px rgba(110, 181, 255, 0.3)',
-            transform: 'translateY(-2px)',
+            boxShadow: '0 4px 12px rgba(15, 23, 42, 0.1)',
           },
-          transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
         }
       }
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          boxShadow: '0 15px 35px rgba(110, 181, 255, 0.12)',
-          border: '4px solid rgba(110, 181, 255, 0.05)',
-        }
-      }
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          borderRadius: 32,
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
+          border: '1px solid #E2E8F0',
         }
       }
     }

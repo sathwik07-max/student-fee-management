@@ -1,7 +1,7 @@
 
 .dashboard-layout {
   display: flex;
-  background: var(--erp-cream);
+  background: #F8FAFC;
   min-height: 100vh;
 }
 
@@ -15,106 +15,99 @@
 }
 
 .dashboard-content {
-  padding: clamp(1.5rem, 4vw, 3rem);
-  max-width: 1400px;
+  padding: 2rem;
+  max-width: 1600px;
   width: 100%;
   margin: 0 auto;
 }
 
 .tab-header {
-  margin-bottom: 2.5rem;
-  background: var(--erp-white);
-  padding: 2rem;
-  border-radius: var(--bubble-radius);
-  border: 4px solid rgba(154, 222, 123, 0.2);
-  box-shadow: var(--erp-shadow);
+  margin-bottom: 2rem;
 }
 
 .tab-header h1 {
-  font-family: 'Bubblegum Sans', cursive;
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 400;
-  color: var(--erp-blue);
-  margin: 0 0 0.4rem 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem 0;
 }
 
 .tab-header p {
-  color: var(--erp-navy);
+  color: #64748B;
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  opacity: 0.8;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .dash-table-section {
-  background: var(--erp-white);
-  border-radius: var(--bubble-radius);
-  border: 4px solid rgba(110, 181, 255, 0.1);
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
   overflow: hidden;
-  margin-top: 2rem;
-  box-shadow: var(--erp-shadow);
+  margin-top: 1.5rem;
 }
 
 .dash-pagination {
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   justify-content: center;
-  gap: 0.8rem;
-  background: var(--erp-white);
-  border-top: 4px solid var(--erp-cream);
+  gap: 0.5rem;
+  background: #FFFFFF;
+  border-top: 1px solid #E2E8F0;
 }
 
 .dash-pagination button {
-  width: 45px;
-  height: 45px;
-  border: none;
-  background: var(--erp-cream);
-  color: var(--erp-blue);
-  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  color: #64748B;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 600;
   transition: 0.2s;
 }
 
 .dash-pagination button.active {
-  background: var(--erp-blue);
-  color: white;
-  transform: scale(1.1);
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
 }
 
 .backup-card {
-  background: var(--erp-white);
-  padding: 2.5rem;
-  border-radius: var(--bubble-radius);
-  border: 4px solid rgba(255, 217, 61, 0.2);
+  background: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  box-shadow: var(--erp-shadow);
+  gap: 1rem;
 }
 
 .backup-info h3 {
-  font-family: 'Bubblegum Sans', cursive;
-  margin: 0 0 0.5rem 0;
-  font-size: 1.8rem;
-  color: var(--erp-navy);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0F172A;
 }
 
 .custom-btn {
-  background: var(--erp-cream);
-  border: 2px solid var(--erp-blue);
-  color: var(--erp-blue);
-  padding: 0.8rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 800;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .custom-btn:hover {
-  background: var(--erp-blue);
-  color: white;
-  transform: translateY(-3px);
+  background: #F8FAFC;
+  border-color: #CBD5E1;
 }
 
 @media (max-width: 1200px) {
