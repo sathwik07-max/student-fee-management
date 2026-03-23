@@ -1,73 +1,82 @@
 .dash-filters {
-  margin: 20px 30px 0 30px;
+  margin: clamp(10px, 2vw, 20px) clamp(10px, 3vw, 30px) 0;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 2px 12px 0 rgba(35, 86, 198, 0.07);
   display: flex;
   flex-wrap: wrap;
-  gap: 16px 22px;
-  padding: 1.2rem 1rem;
+  gap: clamp(10px, 2vw, 22px);
+  padding: clamp(0.8rem, 2vw, 1.2rem);
   align-items: flex-end;
 }
 
 .dash-filters label {
   display: flex;
   flex-direction: column;
-  font-size: 1em;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #2356c6;
   margin-bottom: 0;
-  gap: 6px;
+  gap: 4px;
+  flex-grow: 1;
+  min-width: 140px;
 }
 
 .dash-filters select,
 .dash-filters .filter-input {
   border: 1px solid #b6c5e6;
-  border-radius: 6px;
-  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
   font-size: 1rem;
   background: #f8faff;
   outline: none;
-  min-width: 120px;
-  margin-top: 4px;
+  width: 100%;
+  min-height: 44px; /* Accessible touch target */
+  transition: border-color 0.2s;
 }
 
-.dash-filters .filter-input[type="number"] {
-  max-width: 100px;
-}
-
-.dash-filters > .filter-input {
-  min-width: 180px;
+.dash-filters select:focus,
+.dash-filters .filter-input:focus {
+  border-color: #2356c6;
+  background: #fff;
 }
 
 .filter-reset-btn {
   background: #fd464a;
   color: #fff;
   border: none;
-  border-radius: 7px;
-  font-weight: 500;
-  padding: 0.57rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
   font-size: 1rem;
-  margin-left: 8px;
-  transition: background 0.19s;
+  min-height: 44px; /* Accessible touch target */
+  transition: all 0.2s;
+  flex-grow: 0;
 }
+
 .filter-reset-btn:hover {
   background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(253, 70, 74, 0.2);
 }
 
 /* Responsive for mobile/tablet */
 @media (max-width: 900px) {
   .dash-filters {
-    flex-direction: column;
-    gap: 16px 0;
-    padding: 1rem 0.5rem;
+    gap: 16px;
   }
-  .dash-filters label,
-  .dash-filters > .filter-input,
+  .dash-filters label {
+    min-width: calc(50% - 10px);
+  }
   .filter-reset-btn {
     width: 100%;
-    min-width: 0;
-    margin-left: 0;
+    margin-top: 10px;
   }
+}
+
+@media (max-width: 480px) {
+    .dash-filters label {
+        min-width: 100%;
+    }
 }

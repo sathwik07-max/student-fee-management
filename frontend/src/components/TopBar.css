@@ -1,11 +1,11 @@
 
 .topbar-container {
-  height: 70px;
+  height: clamp(60px, 8vh, 70px);
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 0 clamp(1rem, 3vw, 2rem);
   border-bottom: 1px solid #eef2f6;
   position: sticky;
   top: 0;
@@ -18,9 +18,11 @@
   background: #f8fafc;
   padding: 0.6rem 1.2rem;
   border-radius: 12px;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
+  margin-right: 1rem;
 }
 
 .topbar-search:focus-within {
@@ -43,12 +45,13 @@
   font-weight: 500;
   color: #1e293b;
   outline: none;
+  min-height: 30px;
 }
 
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
 }
 
 .notification-wrapper {
@@ -59,8 +62,8 @@
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   color: #64748b;
-  width: 40px;
-  height: 40px;
+  width: 44px; /* Accessible touch target */
+  height: 44px; /* Accessible touch target */
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -96,9 +99,9 @@
 
 .notification-dropdown {
   position: absolute;
-  top: 50px;
+  top: 55px;
   right: 0;
-  width: 320px;
+  width: min(320px, 90vw);
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -188,21 +191,21 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  padding-left: 1.5rem;
+  padding-left: clamp(0.5rem, 1.5vw, 1.5rem);
   border-left: 1px solid #eef2f6;
   cursor: pointer;
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 5vw, 40px);
+  height: clamp(32px, 5vw, 40px);
   background: #3b82f6;
   color: #fff;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
 }
 
 .user-info {
@@ -225,4 +228,17 @@
 .dropdown-icon {
   color: #94a3b8;
   font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .topbar-search {
+        display: none; /* Hide main search on mobile, usually integrated into a separate filter or toggle */
+    }
+    .user-name, .user-role {
+        display: none;
+    }
+    .user-profile {
+        border-left: none;
+        padding-left: 0;
+    }
 }

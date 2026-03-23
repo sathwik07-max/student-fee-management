@@ -36,6 +36,7 @@ const countersData = [
 export default function HomePage({ onAdmin }) {
   const [slide, setSlide] = useState(0);
   const [counters, setCounters] = useState(countersData.map(() => 0));
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const phoneNumber = "9642572506";
 
   useEffect(() => {
@@ -80,10 +81,19 @@ export default function HomePage({ onAdmin }) {
               <span className="brand-name-sub">HIGH SCHOOL</span>
             </div>
           </div>
-          <div className="nav-menu">
-            <a href="#about" className="nav-link">Our Story</a>
-            <a href="#facilities" className="nav-link">Campus</a>
-            <button className="btn-admin-branded" onClick={onAdmin}>
+
+          <button 
+            className="mobile-menu-toggle" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle navigation"
+          >
+            <span className={`hamburger ${isMenuOpen ? "open" : ""}`}></span>
+          </button>
+
+          <div className={`nav-menu ${isMenuOpen ? "mobile-open" : ""}`}>
+            <a href="#about" className="nav-link" onClick={() => setIsMenuOpen(false)}>Our Story</a>
+            <a href="#facilities" className="nav-link" onClick={() => setIsMenuOpen(false)}>Campus</a>
+            <button className="btn-admin-branded" onClick={() => { onAdmin(); setIsMenuOpen(false); }}>
               <span className="btn-icon">🔒</span> Portal Login
             </button>
           </div>

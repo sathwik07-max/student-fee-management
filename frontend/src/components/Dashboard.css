@@ -7,51 +7,57 @@
 
 .dashboard-main {
   flex: 1;
-  margin-left: 240px;
+  margin-left: 240px; /* Default desktop sidebar width */
   display: flex;
   flex-direction: column;
+  min-width: 0; /* Prevent flex children from overflowing */
+  transition: margin-left 0.3s ease;
 }
 
 .dashboard-content {
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
 }
 
 .tab-header {
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1rem, 4vw, 2rem);
 }
 
 .tab-header h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  font-weight: 800;
   color: #1e293b;
   margin: 0 0 0.4rem 0;
+  line-height: 1.2;
 }
 
 .tab-header p {
   color: #64748b;
   margin: 0;
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 2vw, 1rem);
 }
 
 .header-flex {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .header-actions {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .dashboard-grid-layout {
   display: grid;
   grid-template-columns: 1fr 350px;
-  gap: 2rem;
-  margin-top: 2rem;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: clamp(1rem, 3vw, 2rem);
 }
 
 .analytics-grid {
@@ -73,16 +79,19 @@
   gap: 0.5rem;
   background: #f8fafc;
   border-top: 1px solid #eef2f6;
+  flex-wrap: wrap;
 }
 
 .dash-pagination button {
-  padding: 0.4rem 0.8rem;
+  padding: 0.5rem 1rem;
   border: 1px solid #e2e8f0;
   background: #fff;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   transition: all 0.2s;
+  min-height: 44px; /* Accessible touch target */
 }
 
 .dash-pagination button.active {
@@ -93,13 +102,13 @@
 
 .maintenance-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 45%, 400px), 1fr));
   gap: 1.5rem;
 }
 
 .backup-card {
   background: #fff;
-  padding: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
   border-radius: 12px;
   border: 1px solid #eef2f6;
   display: flex;
@@ -125,12 +134,13 @@
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   color: #1e293b;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.2rem;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
+  min-height: 44px; /* Accessible touch target */
 }
 
 .custom-btn:hover {
@@ -140,7 +150,7 @@
 
 .activity-logs-content, .admissions-content {
   background: #fff;
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
   border-radius: 12px;
   border: 1px solid #eef2f6;
 }
@@ -149,4 +159,23 @@
   .dashboard-grid-layout {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 900px) {
+  .dashboard-main {
+    margin-left: 0; /* Sidebar becomes a drawer or separate overlay */
+  }
+}
+
+@media (max-width: 600px) {
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .header-actions {
+        width: 100%;
+    }
+    .header-actions button, .header-actions a {
+        flex: 1;
+    }
 }
