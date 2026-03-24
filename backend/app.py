@@ -1544,9 +1544,45 @@ def seed_initial_data():
     
     db.session.commit()
 
+def run_migrations():
+    """Automatically adds missing columns to the database on startup."""
+    import sqlite3
+    # Determine the database path (SQLite specific)
+    db_path = os.path.join(basedir, "instance", "school.db")
+    if os.path.exists(db_path):
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        try:
+            # 1. Add is_active column to users table
+            try:
+                cursor.execute("ALTER TABLE users ADD COLUMN is_active BOOLEAN DEFAULT 1")
+                print("Migration: Added 'is_active' to users.")
+            except: pass
+
+            # 2. Add can_collect_fees column to users table
+            try:
+                cursor.execute("ALTER TABLE users ADD COLUMN can_collect_fees BOOLEAN DEFAULT 0")
+                print("Migration: Added 'can_collect_fees' to users.")
+            except: pass
+
+            # 3. Add status column to students table
+            try:
+                cursor.execute("ALTER TABLE students ADD COLUMN status VARCHAR(20) DEFAULT 'Active'")
+                print("Migration: Added 'status' to students.")
+            except: pass
+
+            conn.commit()
+        except Exception as e:
+            print(f"Migration Error: {e}")
+        finally:
+            conn.close()
+
 def initialize_db():
     with app.app_context():
         try:
+            # Run manual migrations first
+            run_migrations()
+            
             print("Connecting to database and creating tables...")
             db.create_all()
             
