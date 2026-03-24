@@ -1544,43 +1544,55 @@ def seed_initial_data():
     
     db.session.commit()
 
+from sqlalchemy import text
+
 def run_migrations():
-    """Automatically adds missing columns to the database on startup."""
-    import sqlite3
-    # Determine the database path (SQLite specific)
-    db_path = os.path.join(basedir, "instance", "school.db")
-    if os.path.exists(db_path):
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
+    """Automatically adds missing columns using SQLAlchemy (Works for SQLite and PostgreSQL)."""
+    with app.app_context():
         try:
-            # 1. Add is_active column to users table
+            # 1. Add status column to students table
             try:
-                cursor.execute("ALTER TABLE users ADD COLUMN is_active BOOLEAN DEFAULT 1")
-                print("Migration: Added 'is_active' to users.")
-            except: pass
+                db.session.execute(text("ALTER TABLE students ADD COLUMN status VARCHAR(20) DEFAULT 'Active'"))
+                db.session.commit()
+                print("Migration: Added 'status' to students.")
+            except Exception as e:
+                db.session.rollback()
+                if "already exists" in str(e).lower() or "duplicate column" in str(e).lower():
+                    print("Migration: 'status' column already exists.")
+                else:
+                    print(f"Migration Note (Status): {e}")
 
             # 2. Add can_collect_fees column to users table
             try:
-                cursor.execute("ALTER TABLE users ADD COLUMN can_collect_fees BOOLEAN DEFAULT 0")
+                db.session.execute(text("ALTER TABLE users ADD COLUMN can_collect_fees BOOLEAN DEFAULT FALSE"))
+                db.session.commit()
                 print("Migration: Added 'can_collect_fees' to users.")
-            except: pass
+            except Exception as e:
+                db.session.rollback()
+                if "already exists" in str(e).lower() or "duplicate column" in str(e).lower():
+                    print("Migration: 'can_collect_fees' already exists.")
+                else:
+                    print(f"Migration Note (Fees): {e}")
 
-            # 3. Add status column to students table
+            # 3. Add is_active column to users table
             try:
-                cursor.execute("ALTER TABLE students ADD COLUMN status VARCHAR(20) DEFAULT 'Active'")
-                print("Migration: Added 'status' to students.")
-            except: pass
+                db.session.execute(text("ALTER TABLE users ADD COLUMN is_active BOOLEAN DEFAULT TRUE"))
+                db.session.commit()
+                print("Migration: Added 'is_active' to users.")
+            except Exception as e:
+                db.session.rollback()
+                if "already exists" in str(e).lower() or "duplicate column" in str(e).lower():
+                    print("Migration: 'is_active' already exists.")
+                else:
+                    print(f"Migration Note (Active): {e}")
 
-            conn.commit()
-        except Exception as e:
-            print(f"Migration Error: {e}")
-        finally:
-            conn.close()
+        except Exception as main_e:
+            print(f"Global Migration Error: {main_e}")
 
 def initialize_db():
     with app.app_context():
         try:
-            # Run manual migrations first
+            # Run migrations before creating tables
             run_migrations()
             
             print("Connecting to database and creating tables...")
