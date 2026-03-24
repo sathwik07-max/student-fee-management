@@ -1625,6 +1625,13 @@ def initialize_db():
 # Run initialization
 initialize_db()
 
+@app.before_request
+def ensure_migrations_run():
+    # Use a global variable or app config to run this only once
+    if not app.config.get('MIGRATIONS_DONE'):
+        run_migrations()
+        app.config['MIGRATIONS_DONE'] = True
+
 if __name__ == '__main__':
     # Determine if we are in production
     is_production = os.getenv('RENDER', 'False') == 'true'

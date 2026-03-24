@@ -500,6 +500,71 @@ export default function Dashboard({ onLogout }) {
             </>
           )}
 
+          {activeTab === "danger" && (
+            <>
+              <PageHeader 
+                title="Danger Zone" 
+                subtitle="Highly destructive system actions. Proceed with extreme caution."
+                actions={<Chip label="ADMIN ONLY" color="error" variant="filled" sx={{ fontWeight: 900 }} />}
+              />
+              
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: { xs: 3, md: 6 }, 
+                  borderRadius: 4, 
+                  border: '2px solid', 
+                  borderColor: 'error.main',
+                  bgcolor: alpha(theme.palette.error.main, 0.02),
+                  textAlign: 'center'
+                }}
+              >
+                <Box sx={{ color: 'error.main', fontSize: '5rem', mb: 3 }}>
+                  <GiNuclearBomb />
+                </Box>
+                
+                <Typography variant="h3" fontWeight={900} color="error.main" gutterBottom>
+                  NUCLEAR SYSTEM RESET
+                </Typography>
+                
+                <Typography variant="h6" sx={{ mb: 4, maxWidth: 700, mx: 'auto', fontWeight: 600 }}>
+                  Executing a Nuclear Reset will wipe all student data, financial records, admissions, and attendance logs. 
+                  The system will return to a completely empty state.
+                </Typography>
+
+                <Box sx={{ 
+                  p: 3, mb: 4, bgcolor: 'rgba(0,0,0,0.05)', borderRadius: 2, 
+                  maxWidth: 600, mx: 'auto', border: '1px dashed red' 
+                }}>
+                  <Typography variant="body2" color="error" fontWeight={800} sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                    Consequences:
+                  </Typography>
+                  <ul style={{ textAlign: 'left', display: 'inline-block', color: theme.palette.text.secondary }}>
+                    <li>All student records will be permanently deleted.</li>
+                    <li>All fee structures and payments will be wiped.</li>
+                    <li>All audit logs and notifications will be cleared.</li>
+                    <li><strong>This action cannot be undone.</strong></li>
+                  </ul>
+                </Box>
+
+                <Button 
+                  variant="contained" 
+                  color="error" 
+                  size="large"
+                  startIcon={<GiNuclearBomb />}
+                  onClick={handleNuclearRequest}
+                  sx={{ 
+                    px: 6, py: 2, borderRadius: 3, fontWeight: 900, fontSize: '1.2rem',
+                    boxShadow: '0 8px 24px rgba(244, 63, 94, 0.4)',
+                    '&:hover': { bgcolor: '#D32F2F', transform: 'scale(1.02)' }
+                  }}
+                >
+                  INITIALIZE NUCLEAR RESET
+                </Button>
+              </Paper>
+            </>
+          )}
+
           {activeTab === "system" && (
             <>
               <PageHeader title="System & Maintenance" subtitle="Configure staff access, promotions, backups, and data migration." />
