@@ -24,7 +24,8 @@ import {
   Stack,
   Divider,
   alpha,
-  Avatar
+  Avatar,
+  Grid
 } from "@mui/material";
 import { FiEdit, FiTrash2, FiCreditCard, FiPhone, FiBookOpen } from "react-icons/fi";
 
