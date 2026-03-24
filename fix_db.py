@@ -11,8 +11,25 @@ if os.path.exists(db_path):
         # 1. Add is_active column to users table
         cursor.execute("ALTER TABLE users ADD COLUMN is_active BOOLEAN DEFAULT 1")
         print("Successfully added 'is_active' column to 'users' table.")
+    except sqlite3.OperationalError:
+        print("Column 'is_active' already exists in 'users'.")
+
+    try:
+        # 2. Add can_collect_fees column to users table
+        cursor.execute("ALTER TABLE users ADD COLUMN can_collect_fees BOOLEAN DEFAULT 0")
+        print("Successfully added 'can_collect_fees' column to 'users' table.")
+    except sqlite3.OperationalError:
+        print("Column 'can_collect_fees' already exists in 'users'.")
+
+    try:
+        # 3. Add status column to students table
+        cursor.execute("ALTER TABLE students ADD COLUMN status VARCHAR(20) DEFAULT 'Active'")
+        print("Successfully added 'status' column to 'students' table.")
+    except sqlite3.OperationalError:
+        print("Column 'status' already exists in 'students'.")
         
-        # 2. Check for assigned_classes table or helper table
+    try:
+        # 4. Check for assigned_classes table or helper table
         # If the many-to-many relationship table doesn't exist, we should ensure the schema is updated
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='user_classrooms'")
         if not cursor.fetchone():
