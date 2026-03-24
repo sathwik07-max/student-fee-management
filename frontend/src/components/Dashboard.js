@@ -218,12 +218,37 @@ export default function Dashboard({ onLogout }) {
   };
 
   const PageHeader = ({ title, subtitle, actions }) => (
-    <Box sx={{ mb: 4, display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 2 }}>
+    <Box sx={{ 
+      mb: { xs: 3, md: 5 }, 
+      display: 'flex', 
+      flexDirection: { xs: 'column', md: 'row' }, 
+      justifyContent: 'space-between', 
+      alignItems: { xs: 'flex-start', md: 'center' }, 
+      gap: 3 
+    }}>
       <Box>
-        <Typography variant="h4" sx={{ fontWeight: 800, color: 'text.primary', mb: 0.5 }}>{title}</Typography>
-        <Typography variant="body1" color="text.secondary">{subtitle}</Typography>
+        <Typography variant="h4" sx={{ 
+          fontWeight: 900, 
+          color: 'text.primary', 
+          mb: 0.5,
+          fontSize: { xs: '1.75rem', md: '2.25rem' },
+          letterSpacing: '-0.03em'
+        }}>
+          {title}
+        </Typography>
+        <Typography variant="body1" sx={{ color: 'text.secondary', fontWeight: 500, fontSize: { xs: '0.9rem', md: '1rem' } }}>
+          {subtitle}
+        </Typography>
       </Box>
-      <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>{actions}</Box>
+      <Box sx={{ 
+        display: 'flex', 
+        gap: 1.5, 
+        flexWrap: 'wrap',
+        width: { xs: '100%', md: 'auto' },
+        justifyContent: { xs: 'flex-start', md: 'flex-end' }
+      }}>
+        {actions}
+      </Box>
     </Box>
   );
 
@@ -238,10 +263,10 @@ export default function Dashboard({ onLogout }) {
         onMobileClose={() => setMobileOpen(false)}
       />
       
-      <Box component="main" sx={{ flexGrow: 1, width: { md: `calc(100% - 280px)` } }}>
+      <Box component="main" sx={{ flexGrow: 1, width: { md: `calc(100% - 280px)` }, minWidth: 0 }}>
         <TopBar user={username} onSearch={setSearch} onMenuToggle={() => setMobileOpen(true)} />
         
-        <Container maxWidth="xl" sx={{ mt: 4, mb: 4, px: { xs: 2, md: 4 } }}>
+        <Container maxWidth="xl" sx={{ mt: { xs: 3, md: 5 }, mb: 4, px: { xs: 2, sm: 3, md: 5 } }}>
           {activeTab === "overview" && (
             <>
               <PageHeader 
@@ -252,71 +277,67 @@ export default function Dashboard({ onLogout }) {
               
               {/* Quick Actions Row */}
               {isAdmin && (
-                <Grid container spacing={2} sx={{ mb: 4 }}>
-                  <Grid item xs={12} sm={6} md={3}>
-                    <Paper 
-                      elevation={0}
-                      onClick={handleOpenAdd}
-                      sx={{ 
-                        p: 2, borderRadius: 3, textAlign: 'center', cursor: 'pointer',
-                        bgcolor: alpha(theme.palette.primary.main, 0.05),
-                        border: '1px solid', borderColor: alpha(theme.palette.primary.main, 0.1),
-                        '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1), transform: 'translateY(-4px)' },
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <Box sx={{ color: 'primary.main', fontSize: '2rem', mb: 1 }}><FiPlus /></Box>
-                      <Typography variant="subtitle2" fontWeight={700}>New Admission</Typography>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
-                    <Paper 
-                      elevation={0}
-                      onClick={() => setActiveTab("admissions")}
-                      sx={{ 
-                        p: 2, borderRadius: 3, textAlign: 'center', cursor: 'pointer',
-                        bgcolor: alpha(theme.palette.info.main, 0.05),
-                        border: '1px solid', borderColor: alpha(theme.palette.info.main, 0.1),
-                        '&:hover': { bgcolor: alpha(theme.palette.info.main, 0.1), transform: 'translateY(-4px)' },
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <Box sx={{ color: 'info.main', fontSize: '2rem', mb: 1 }}><FiFileText /></Box>
-                      <Typography variant="subtitle2" fontWeight={700}>Admission Records</Typography>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
-                    <Paper 
-                      elevation={0}
-                      onClick={() => setActiveTab("promotion")}
-                      sx={{ 
-                        p: 2, borderRadius: 3, textAlign: 'center', cursor: 'pointer',
-                        bgcolor: alpha(theme.palette.secondary.main, 0.05),
-                        border: '1px solid', borderColor: alpha(theme.palette.secondary.main, 0.1),
-                        '&:hover': { bgcolor: alpha(theme.palette.secondary.main, 0.1), transform: 'translateY(-4px)' },
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <Box sx={{ color: 'secondary.main', fontSize: '2rem', mb: 1 }}><FiUploadCloud /></Box>
-                      <Typography variant="subtitle2" fontWeight={700}>Bulk student Upload</Typography>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
-                    <Paper 
-                      elevation={0}
-                      onClick={() => setActiveTab("analytics")}
-                      sx={{ 
-                        p: 2, borderRadius: 3, textAlign: 'center', cursor: 'pointer',
-                        bgcolor: alpha(theme.palette.success.main, 0.05),
-                        border: '1px solid', borderColor: alpha(theme.palette.success.main, 0.1),
-                        '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.1), transform: 'translateY(-4px)' },
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <Box sx={{ color: 'success.main', fontSize: '2rem', mb: 1 }}><FiTrendingUp /></Box>
-                      <Typography variant="subtitle2" fontWeight={700}>Finance Reports</Typography>
-                    </Paper>
-                  </Grid>
+                <Grid container spacing={3} sx={{ mb: 4 }}>
+                  {[
+                    { title: "New Admission", icon: <FiPlus />, color: theme.palette.secondary.main, action: handleOpenAdd, sub: "Register a new student" },
+                    { title: "Admission Records", icon: <FiFileText />, color: theme.palette.info.main, action: () => setActiveTab("admissions"), sub: "View student folders" },
+                    { title: "Bulk Upload", icon: <FiUploadCloud />, color: theme.palette.warning.main, action: () => setActiveTab("promotion"), sub: "Import excel data" },
+                    { title: "Finance Reports", icon: <FiTrendingUp />, color: theme.palette.success.main, action: () => setActiveTab("analytics"), sub: "View collection stats" }
+                  ].map((item, index) => (
+                    <Grid item xs={12} sm={6} md={3} key={index}>
+                      <Paper 
+                        elevation={0}
+                        onClick={item.action}
+                        sx={{ 
+                          p: 3, 
+                          borderRadius: 4, 
+                          cursor: 'pointer',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-start',
+                          gap: 1.5,
+                          border: '1px solid',
+                          borderColor: alpha(item.color, 0.1),
+                          background: `linear-gradient(135deg, #ffffff 0%, ${alpha(item.color, 0.02)} 100%)`,
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          '&:hover': { 
+                            borderColor: alpha(item.color, 0.3),
+                            transform: 'translateY(-6px)',
+                            boxShadow: `0 12px 24px -10px ${alpha(item.color, 0.2)}`,
+                            '& .action-icon': {
+                              transform: 'scale(1.1) rotate(-8deg)',
+                              bgcolor: item.color,
+                              color: '#fff'
+                            }
+                          }
+                        }}
+                      >
+                        <Box 
+                          className="action-icon"
+                          sx={{ 
+                            color: item.color, 
+                            bgcolor: alpha(item.color, 0.1),
+                            width: 48, 
+                            height: 48, 
+                            borderRadius: 2.5,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '1.5rem',
+                            transition: 'all 0.3s ease'
+                          }}
+                        >
+                          {item.icon}
+                        </Box>
+                        <Box>
+                          <Typography variant="subtitle1" sx={{ fontWeight: 800, mb: 0.5 }}>{item.title}</Typography>
+                          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>{item.sub}</Typography>
+                        </Box>
+                      </Paper>
+                    </Grid>
+                  ))}
                 </Grid>
               )}
 

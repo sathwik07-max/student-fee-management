@@ -67,25 +67,38 @@ export default function Sidebar({
   const drawerContent = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', bgcolor: 'primary.main', color: 'white' }}>
       {/* Brand Header */}
-      <Box sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box sx={{ p: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
         <Box 
-          component="img" 
-          src="/logo.png" 
-          sx={{ width: 32, height: 32, borderRadius: 1 }}
-        />
+          sx={{ 
+            width: 40, 
+            height: 40, 
+            borderRadius: 2, 
+            bgcolor: 'secondary.main',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 8px 16px rgba(99, 102, 241, 0.2)'
+          }}
+        >
+          <Box 
+            component="img" 
+            src="/logo.png" 
+            sx={{ width: 24, height: 24 }}
+          />
+        </Box>
         <Box>
-          <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1, letterSpacing: '-0.02em' }}>
+          <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1, letterSpacing: '-0.02em', color: 'white' }}>
             ADARSHA
           </Typography>
-          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', fontWeight: 700, letterSpacing: '0.1em' }}>
-            ERP SYSTEM
+          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            ERP System
           </Typography>
         </Box>
       </Box>
 
       {/* Action Button */}
       {userRole === 'admin' && (
-        <Box sx={{ px: 2, py: 2 }}>
+        <Box sx={{ px: 3, mb: 4 }}>
           <Button
             fullWidth
             variant="contained"
@@ -96,10 +109,15 @@ export default function Sidebar({
               if (isMobile) onMobileClose();
             }}
             sx={{ 
-              py: 1.25, 
-              borderRadius: 2,
-              fontWeight: 700,
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)'
+              py: 1.5, 
+              borderRadius: 3,
+              fontWeight: 800,
+              fontSize: '0.875rem',
+              boxShadow: '0 8px 20px rgba(99, 102, 241, 0.3)',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: '0 12px 24px rgba(99, 102, 241, 0.4)',
+              }
             }}
           >
             New Admission
@@ -108,36 +126,52 @@ export default function Sidebar({
       )}
 
       {/* Navigation */}
-      <Box sx={{ flexGrow: 1, px: 1.5 }}>
-        <Typography variant="caption" sx={{ px: 2, mb: 1.5, display: 'block', color: 'rgba(255,255,255,0.4)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Navigation
+      <Box sx={{ flexGrow: 1, px: 2, overflowY: 'auto', '&::-webkit-scrollbar': { width: 0 } }}>
+        <Typography variant="caption" sx={{ px: 2, mb: 2, display: 'block', color: 'rgba(255,255,255,0.3)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', fontSize: '0.7rem' }}>
+          Main Menu
         </Typography>
         <List sx={{ p: 0 }}>
           {filteredItems.map((item) => {
             const active = activeTab === item.id;
+            const isDanger = item.id === 'danger';
             return (
-              <ListItem key={item.id} disablePadding sx={{ mb: 0.5 }}>
+              <ListItem key={item.id} disablePadding sx={{ mb: 0.75 }}>
                 <ListItemButton
                   onClick={() => {
                     setActiveTab(item.id);
                     if (isMobile) onMobileClose();
                   }}
                   sx={{
-                    borderRadius: 2,
-                    py: 1,
-                    backgroundColor: active ? 'rgba(255,255,255,0.1)' : 'transparent',
-                    color: active ? 'secondary.main' : 'rgba(255,255,255,0.7)',
+                    borderRadius: 3,
+                    py: 1.25,
+                    px: 2,
+                    backgroundColor: active ? 'rgba(255,255,255,0.08)' : 'transparent',
+                    color: active ? 'white' : 'rgba(255,255,255,0.6)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    '&::before': active ? {
+                      content: '""',
+                      position: 'absolute',
+                      left: 0,
+                      top: '20%',
+                      bottom: '20%',
+                      width: 4,
+                      borderRadius: '0 4px 4px 0',
+                      bgcolor: 'secondary.main',
+                    } : {},
                     '&:hover': {
                       backgroundColor: 'rgba(255,255,255,0.05)',
-                      color: 'white'
+                      color: 'white',
+                      '& .MuiListItemIcon-root': { color: 'white' }
                     },
-                    transition: 'all 0.2s ease'
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
                   <ListItemIcon sx={{ 
-                    color: 'inherit', 
-                    minWidth: 36,
-                    fontSize: '1.2rem'
+                    color: active ? 'secondary.main' : 'inherit', 
+                    minWidth: 38,
+                    fontSize: '1.25rem',
+                    transition: 'color 0.2s'
                   }}>
                     {item.icon}
                   </ListItemIcon>
@@ -145,7 +179,8 @@ export default function Sidebar({
                     primary={item.label} 
                     primaryTypographyProps={{ 
                       fontWeight: active ? 700 : 600,
-                      fontSize: '0.875rem'
+                      fontSize: '0.9rem',
+                      letterSpacing: '0.01em'
                     }} 
                   />
                 </ListItemButton>
@@ -155,20 +190,58 @@ export default function Sidebar({
         </List>
       </Box>
 
-      {/* Footer */}
-      <Box sx={{ p: 2, mt: 'auto' }}>
+      {/* Footer Profile */}
+      <Box sx={{ p: 2, mt: 'auto', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <Box sx={{ 
+          p: 2, 
+          mb: 1, 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 1.5,
+          bgcolor: 'rgba(255,255,255,0.03)',
+          borderRadius: 3
+        }}>
+          <Box 
+            sx={{ 
+              width: 36, 
+              height: 36, 
+              borderRadius: '50%', 
+              bgcolor: 'secondary.main',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 800,
+              fontSize: '0.8rem'
+            }}
+          >
+            {username ? username.charAt(0).toUpperCase() : 'A'}
+          </Box>
+          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+            <Typography variant="body2" sx={{ fontWeight: 700, color: 'white', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {username || "Admin"}
+            </Typography>
+            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.4)', display: 'block' }}>
+              {userRole === 'admin' ? 'Super Admin' : 'Staff Member'}
+            </Typography>
+          </Box>
+        </Box>
+        
         <ListItemButton
           onClick={onLogout}
           sx={{
-            borderRadius: 2,
+            borderRadius: 3,
             color: '#FDA4AF',
-            '&:hover': { backgroundColor: 'rgba(244, 63, 94, 0.1)' }
+            py: 1,
+            '&:hover': { 
+              backgroundColor: 'rgba(244, 63, 94, 0.1)',
+              color: '#FF4D4D'
+            }
           }}
         >
-          <ListItemIcon sx={{ color: 'inherit', minWidth: 36 }}>
+          <ListItemIcon sx={{ color: 'inherit', minWidth: 38 }}>
             <FiLogOut />
           </ListItemIcon>
-          <ListItemText primary="Sign Out" primaryTypographyProps={{ fontWeight: 700, fontSize: '0.875rem' }} />
+          <ListItemText primary="Sign Out" primaryTypographyProps={{ fontWeight: 700, fontSize: '0.9rem' }} />
         </ListItemButton>
       </Box>
     </Box>

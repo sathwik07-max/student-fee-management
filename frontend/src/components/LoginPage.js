@@ -67,22 +67,24 @@ export default function LoginPage({ onLogin, showNotification }) {
           >
             <Box sx={{ mb: 4 }}>
               <Box sx={{ 
-                width: 70, height: 70, 
-                bgcolor: alpha(theme.palette.primary.main, 0.1), 
-                borderRadius: "50%", 
+                width: 80, height: 80, 
+                bgcolor: alpha(theme.palette.secondary.main, 0.1), 
+                borderRadius: 4, 
                 display: "flex", 
                 alignItems: "center", 
                 justifyContent: "center",
                 mx: "auto",
-                mb: 2
+                mb: 3,
+                boxShadow: `0 8px 16px ${alpha(theme.palette.secondary.main, 0.2)}`,
+                transform: 'rotate(-5deg)'
               }}>
-                <FiShield size={35} color={theme.palette.primary.main} />
+                <FiShield size={40} color={theme.palette.secondary.main} />
               </Box>
-              <Typography variant="h4" fontWeight={900} color="primary.main" gutterBottom>
+              <Typography variant="h4" sx={{ fontWeight: 900, color: 'primary.main', mb: 1, letterSpacing: '-0.03em' }}>
                 Admin Portal
               </Typography>
-              <Typography variant="body1" color="text.secondary">
-                Welcome back! Please login to your account.
+              <Typography variant="body1" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Sign in to manage your institution
               </Typography>
             </Box>
 
@@ -98,12 +100,12 @@ export default function LoginPage({ onLogin, showNotification }) {
                   required
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">
-                        <FiUser color={theme.palette.text.secondary} />
+                      <InputAdornment position="start" sx={{ color: 'text.disabled' }}>
+                        <FiUser size={20} />
                       </InputAdornment>
                     ),
                   }}
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 3 } }}
+                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 3.5 } }}
                 />
 
                 <TextField
@@ -116,8 +118,8 @@ export default function LoginPage({ onLogin, showNotification }) {
                   required
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">
-                        <FiLock color={theme.palette.text.secondary} />
+                      <InputAdornment position="start" sx={{ color: 'text.disabled' }}>
+                        <FiLock size={20} />
                       </InputAdornment>
                     ),
                     endAdornment: (
@@ -125,14 +127,15 @@ export default function LoginPage({ onLogin, showNotification }) {
                         <IconButton
                           onClick={() => setShowPassword(!showPassword)}
                           edge="end"
-                          size="small"
+                          size="medium"
+                          sx={{ color: 'text.disabled' }}
                         >
-                          {showPassword ? <FiEyeOff /> : <FiEye />}
+                          {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                         </IconButton>
                       </InputAdornment>
                     ),
                   }}
-                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 3 } }}
+                  sx={{ "& .MuiOutlinedInput-root": { borderRadius: 3.5 } }}
                 />
 
                 {error && (

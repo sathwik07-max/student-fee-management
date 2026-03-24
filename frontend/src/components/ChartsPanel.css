@@ -2,27 +2,54 @@
 .charts-panel {
   display: flex;
   flex-wrap: wrap;
-  gap: 28px;
-  margin: 36px 30px 0 30px;
-  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
 }
+
 .chart-card {
-  background: #fff;
+  background: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 2px 12px 0 rgba(35, 86, 198, 0.07);
-  padding: 1.1rem 1.5rem 0.7rem 1.5rem;
-  flex: 1 1 350px;
-  min-width: 320px;
-  max-width: 480px;
+  padding: 1.5rem;
+  flex: 1 1 300px;
+  min-width: 0;
 }
-.chart-card h4 {
-  color: #2356c6;
-  margin-bottom: 1rem;
-  font-size: 1.12rem;
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
+
+.chart-header {
+  margin-bottom: 2rem;
 }
-@media (max-width: 900px) {
-  .charts-panel { flex-direction: column; margin: 18px 5px 0 5px; }
-  .chart-card { margin-bottom: 18px; }
+
+.chart-header h4 {
+  color: #0f172a;
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.chart-header p {
+  color: #64748b;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.charts-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 100%;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 1200px) {
+  .charts-panel {
+    flex-direction: column;
+  }
+  .chart-card {
+    max-width: 100%;
+  }
 }
