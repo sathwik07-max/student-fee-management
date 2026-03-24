@@ -112,6 +112,12 @@ export async function fetchStudents() {
   return await res.json();
 }
 
+export async function fetchAlumni() {
+  const res = await authFetch(`${API}/students/alumni`);
+  if (!res.ok) throw new Error("Failed to fetch alumni records");
+  return await res.json();
+}
+
 export async function downloadFeeCard(idno) {
   try {
     const token = localStorage.getItem("token");
@@ -343,6 +349,18 @@ export async function academicYearRollover(nextYearName) {
     body: JSON.stringify({ nextYearName })
   });
   if (!res.ok) throw new Error("Rollover failed");
+  return await res.json();
+}
+
+export async function nuclearReset(password) {
+  const res = await authFetch(`${API}/danger-zone/reset`, {
+    method: "POST",
+    body: JSON.stringify({ password })
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Nuclear Reset failed");
+  }
   return await res.json();
 }
 

@@ -28,10 +28,13 @@ import {
 // Import API and existing components
 import {
   fetchStudents,
+  fetchAlumni,
   deleteStudent as apiDeleteStudent,
   verifyPassword,
-  academicYearRollover
+  academicYearRollover,
+  nuclearReset
 } from "../api";
+import { GiNuclearBomb } from "react-icons/gi";
 import StatsPanel from "./StatsPanel";
 import StudentEditModal from "./StudentEditModal";
 import FeePaymentModal from "./FeePaymentModal";
@@ -87,7 +90,9 @@ export default function Dashboard({ onLogout }) {
   const isAdmin = userRole === 'admin' || username === 'admin';
 
   const refreshStudents = () => {
-    fetchStudents().then((data) => {
+    const fetchFunc = activeTab === 'alumni' ? fetchAlumni : fetchStudents;
+    
+    fetchFunc().then((data) => {
       setStudents(data);
       setFiltered(data);
       
@@ -114,6 +119,9 @@ export default function Dashboard({ onLogout }) {
 
   useEffect(() => {
     refreshStudents();
+  }, [activeTab]);
+
+  useEffect(() => {
     const handleMsg = (e) => {
       if (e.data === "admissionSaved") refreshStudents();
     };
@@ -163,6 +171,13 @@ export default function Dashboard({ onLogout }) {
     }
   };
 
+  const handleNuclearRequest = () => {
+    if (window.confirm("FATAL WARNING: This will permanently DELETE all students, payments, and fees. This action is IRREVERSIBLE. Are you absolutely sure?")) {
+        setPendingAction({ type: 'nuclear_reset' });
+        setShowPasswordModal(true);
+    }
+  };
+
   const handlePasswordSuccess = async (password) => {
     try {
         const isValid = await verifyPassword(password);
@@ -179,6 +194,11 @@ export default function Dashboard({ onLogout }) {
             await academicYearRollover(nextYear);
             setNotification("Academic Year Rollover Complete!");
             refreshStudents();
+        } else if (pendingAction.type === 'nuclear_reset') {
+            await nuclearReset(password);
+            setNotification("SYSTEM WIPED SUCCESSFULLY.");
+            refreshStudents();
+            setActiveTab("overview");
         }
         setPendingAction(null);
     } catch (e) { alert("Error: " + e.message); }
@@ -371,6 +391,56 @@ export default function Dashboard({ onLogout }) {
             </>
           )}
 
+          {activeTab === "alumni" && (
+            <>
+              <PageHeader 
+                title="Alumni Vault" 
+                subtitle="View graduated students and track their final outstanding dues."
+                actions={<DownloadButtons filteredStudents={filtered} />}
+              />
+              <Paper sx={{ p: 0, borderRadius: 3, overflow: 'hidden', mb: 3 }}>
+                <FilterBar
+                  search={search} setSearch={setSearch}
+                  searchId={searchId} setSearchId={setSearchId}
+                  selectedClass={selectedClass} setSelectedClass={setSelectedClass}
+                  classes={classes}
+                  selectedVillage={selectedVillage} setSelectedVillage={setSelectedVillage}
+                  villages={villages}
+                  selectedBus={selectedBus} setSelectedBus={setSelectedBus}
+                  buses={["All", "Bus 1", "Bus 2", "Bus 3", "Bus 4", "Not Applicable"]}
+                  hostel={hostel} setHostel={setHostel}
+                  dueMin={dueMin} setDueMin={setDueMin}
+                  dueMax={dueMax} setDueMax={setDueMax}
+                  resetFilters={() => {
+                    setSearch(""); setSearchId(""); setSelectedClass("All");
+                    setSelectedVillage("All"); setSelectedBus("All"); setHostel("All");
+                    setDueMin(""); setDueMax("");
+                  }}
+                />
+              </Paper>
+              <Paper sx={{ p: 0, borderRadius: 3, overflow: 'hidden' }}>
+                <StudentTable
+                  students={paginated}
+                  onEdit={null} // No editing alumni core info here
+                  onDelete={isAdmin ? handleDeleteRequest : null}
+                  onPayment={(isAdmin || canCollectFees) ? (s) => { setPaymentStudent(s); setShowPaymentModal(true); } : null}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                />
+                <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', bgcolor: 'background.paper' }}>
+                  <Pagination 
+                    count={Math.ceil(filtered.length / rowsPerPage)} 
+                    page={page} 
+                    onChange={(_, val) => setPage(val)}
+                    color="primary"
+                    shape="rounded"
+                    size={isMobile ? "small" : "medium"}
+                  />
+                </Box>
+              </Paper>
+            </>
+          )}
+
           {activeTab === "promotion" && (
             <>
               <PageHeader title="Academic & Data Management" subtitle="Bulk promote students or migrate large datasets." />
@@ -479,6 +549,71 @@ export default function Dashboard({ onLogout }) {
                   </Paper>
                 </Grid>
               </Grid>
+            </>
+          )}
+
+          {activeTab === "danger" && (
+            <>
+              <PageHeader 
+                title="Danger Zone" 
+                subtitle="Highly destructive system actions. Proceed with extreme caution."
+                actions={<Chip label="ADMIN ONLY" color="error" variant="filled" sx={{ fontWeight: 900 }} />}
+              />
+              
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: { xs: 3, md: 6 }, 
+                  borderRadius: 4, 
+                  border: '2px solid', 
+                  borderColor: 'error.main',
+                  bgcolor: alpha(theme.palette.error.main, 0.02),
+                  textAlign: 'center'
+                }}
+              >
+                <Box sx={{ color: 'error.main', fontSize: '5rem', mb: 3 }}>
+                  <GiNuclearBomb />
+                </Box>
+                
+                <Typography variant="h3" fontWeight={900} color="error.main" gutterBottom>
+                  NUCLEAR SYSTEM RESET
+                </Typography>
+                
+                <Typography variant="h6" sx={{ mb: 4, maxWidth: 700, mx: 'auto', fontWeight: 600 }}>
+                  Executing a Nuclear Reset will wipe all student data, financial records, admissions, and attendance logs. 
+                  The system will return to a completely empty state.
+                </Typography>
+
+                <Box sx={{ 
+                  p: 3, mb: 4, bgcolor: 'rgba(0,0,0,0.05)', borderRadius: 2, 
+                  maxWidth: 600, mx: 'auto', border: '1px dashed red' 
+                }}>
+                  <Typography variant="body2" color="error" fontWeight={800} sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                    Consequences:
+                  </Typography>
+                  <ul style={{ textAlign: 'left', display: 'inline-block', color: theme.palette.text.secondary }}>
+                    <li>All student records will be permanently deleted.</li>
+                    <li>All fee structures and payments will be wiped.</li>
+                    <li>All audit logs and notifications will be cleared.</li>
+                    <li><strong>This action cannot be undone.</strong></li>
+                  </ul>
+                </Box>
+
+                <Button 
+                  variant="contained" 
+                  color="error" 
+                  size="large"
+                  startIcon={<GiNuclearBomb />}
+                  onClick={handleNuclearRequest}
+                  sx={{ 
+                    px: 6, py: 2, borderRadius: 3, fontWeight: 900, fontSize: '1.2rem',
+                    boxShadow: '0 8px 24px rgba(244, 63, 94, 0.4)',
+                    '&:hover': { bgcolor: '#D32F2F', transform: 'scale(1.02)' }
+                  }}
+                >
+                  INITIALIZE NUCLEAR RESET
+                </Button>
+              </Paper>
             </>
           )}
         </Container>

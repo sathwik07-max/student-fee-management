@@ -26,8 +26,10 @@ import {
   FiFileText,
   FiGrid,
   FiShield,
-  FiTrendingUp
+  FiTrendingUp,
+  FiAlertOctagon
 } from "react-icons/fi";
+import { GiNuclearBomb } from "react-icons/gi";
 
 const drawerWidth = 280;
 
@@ -47,6 +49,7 @@ export default function Sidebar({
   const menuItems = [
     { id: "overview", label: "Dashboard", icon: <FiGrid /> },
     { id: "students", label: "Student List", icon: <FiUsers /> },
+    { id: "alumni", label: "Alumni Records", icon: <FiUsers />, adminOnly: true },
     { id: "admissions", label: "Admissions", icon: <FiFileText />, adminOnly: true },
     { id: "feeconfig", label: "Fee Configuration", icon: <FiDollarSign />, adminOnly: true },
     { id: "promotion", label: "Academic & Data", icon: <FiTrendingUp />, adminOnly: true },
@@ -54,6 +57,7 @@ export default function Sidebar({
     { id: "analytics", label: "Finance & Reports", icon: <FiPieChart />, adminOnly: true },
     { id: "logs", label: "Audit Logs", icon: <FiDatabase />, adminOnly: true },
     { id: "system", label: "System & Maintenance", icon: <FiSettings />, adminOnly: true },
+    { id: "danger", label: "Danger Zone", icon: <GiNuclearBomb />, adminOnly: true, color: '#FF4444' },
   ];
 
   const filteredItems = menuItems.filter(item => 

@@ -102,6 +102,7 @@ class Student(db.Model):
     date_of_birth = db.Column(db.Date)
     gender = db.Column(db.String(20))
     aadhar_no = db.Column(db.String(20))
+    status = db.Column(db.String(20), default='Active') # Active, Alumni, Left
 
     sessions = db.relationship('StudentSession', backref='student', lazy=True, cascade="all, delete-orphan")
     admission = db.relationship('Admission', backref='student', uselist=False, cascade="all, delete-orphan")

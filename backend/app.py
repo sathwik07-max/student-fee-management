@@ -189,23 +189,41 @@ def parse_date(date_str):
         except: continue
     return None
 
-@app.route('/danger-zone/reset', methods=['GET'])
+@app.route('/danger-zone/reset', methods=['POST'])
+@admin_required()
 def reset_database_data():
+    """Nuclear Reset: Deletes all student and financial data. Requires admin password."""
+    data = request.json or {}
+    password = data.get("password")
+    
+    if not check_admin_password(password):
+        return jsonify({"success": False, "error": "Invalid administrative password. Reset aborted."}), 401
+
     try:
-        print("NUCLEAR RESET STARTED...")
+        print("NUCLEAR RESET STARTED BY ADMIN...")
         # Delete in order to avoid Foreign Key errors
-        db.session.query(Payment).delete()
-        db.session.query(StudentFee).delete()
-        db.session.query(StudentAttendance).delete()
-        db.session.query(StudentSession).delete()
-        db.session.query(Admission).delete()
-        db.session.query(Student).delete()
-        db.session.query(AuditLog).delete()
+        Payment.query.delete()
+        StudentFee.query.delete()
+        StudentAttendance.query.delete()
+        StudentSession.query.delete()
+        Admission.query.delete()
+        Student.query.delete()
+        AuditLog.query.delete()
+        
+        # Log this catastrophic action (before the logs themselves are wiped, though here we wipe logs too)
+        # Actually, if we wipe logs, we should probably keep this one or log to a file.
         db.session.commit()
-        return "<h1>DATABASE CLEANED SUCCESSFULLY!</h1><p>You can now do ONE clean upload.</p>"
+        
+        # Re-add a log entry for the reset itself after the wipe
+        log_action("NUCLEAR SYSTEM RESET", "All data wiped", "system")
+        
+        return jsonify({
+            "success": True, 
+            "message": "DATABASE CLEANED SUCCESSFULLY! You can now perform a fresh data import."
+        })
     except Exception as e:
         db.session.rollback()
-        return f"<h1>RESET FAILED</h1><p>{str(e)}</p>"
+        return jsonify({"success": False, "error": str(e)}), 500
 
 # --- AUTH & SYSTEM ROUTES ---
 
@@ -584,7 +602,8 @@ def get_students():
     user = User.query.get(user_id)
     active_year = get_active_year()
     
-    query = Student.query.join(StudentSession).filter(StudentSession.academic_year_id == active_year.id)
+    # SHIELD 1: Only return Active students for main view
+    query = Student.query.filter_by(status='Active').join(StudentSession).filter(StudentSession.academic_year_id == active_year.id)
 
     if user.role == 'teacher':
         assigned_class_ids = [c.id for c in user.assigned_classes]
@@ -609,6 +628,13 @@ def get_students():
             session['discount'] = safe_float(session.get('discount'))
 
     return jsonify(data)
+
+@app.route('/students/alumni', methods=['GET'])
+@admin_required()
+def get_alumni():
+    # Return all Alumni regardless of year
+    alumni = Student.query.filter_by(status='Alumni').all()
+    return jsonify(students_schema.dump(alumni))
 
 @app.route('/students', methods=['POST'])
 @jwt_required()
